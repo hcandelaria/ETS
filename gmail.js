@@ -13,6 +13,7 @@ const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
+  console.log('klk')
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Gmail API.
   authorize(JSON.parse(content), listMessages)

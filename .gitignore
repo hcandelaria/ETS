@@ -102,7 +102,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # gmail
-credentials.js
+credentials.json
 token.json
 
 # End of https://www.gitignore.io/api/node,windows
