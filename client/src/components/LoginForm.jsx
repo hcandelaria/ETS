@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { GoogleLogin } from 'react-google-login';
+
+const googleLoginStyle = {
+  color: '#ffffff',
+  width: '100px',
+}
 
 const LoginForm = ({
   onSubmit,
@@ -11,7 +17,8 @@ const LoginForm = ({
   errors,
   successMessage,
   user,
-  toggleAuthenticateStatus
+  toggleAuthenticateStatus,
+  gmailSubmit
 }) => (
   <Card className="container">
     <form action="/" onSubmit={onSubmit}>
@@ -55,7 +62,8 @@ LoginForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   successMessage: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  gmailSubmit: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

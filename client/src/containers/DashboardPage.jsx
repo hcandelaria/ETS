@@ -1,7 +1,9 @@
 import React from 'react';
 import Auth from '../modules/Auth';
 import Dashboard from '../components/Dashboard.jsx';
-
+import ApplicantsTablet from '../components/ApplicantsTablet.jsx'
+import { Card } from 'material-ui/Card';
+import { Tabs, Tab} from 'material-ui/Tabs';
 
 class DashboardPage extends React.Component {
 
@@ -42,7 +44,28 @@ class DashboardPage extends React.Component {
    * Render the component.
    */
   render() {
-    return (<Dashboard secretData={this.state.secretData} user={this.state.user} />);
+    return (
+      <Card className='container'>
+        <Tabs className='tab-demo z-depth-1'>
+          <Tab title="home"
+            label={<span style={{ color: 'black' }}>Home</span>}>
+            <Dashboard secretData={this.state.secretData} user={this.state.user} />
+          </Tab>
+          <Tab title="Applicants"
+            label={<span style={{ color: 'black' }}>Applicants</span>}>
+            Test 2
+          </Tab>
+          <Tab title="Test 3"
+            label={<span style={{ color: 'black' }}>Test 3</span>}>
+            Test 3
+          </Tab>
+          <Tab title="Test 4"
+            label={<span style={{ color: 'black' }}>Test 4</span>}>
+            Test 4
+          </Tab>
+        </Tabs>
+      </Card>
+    );
   }
 
 }

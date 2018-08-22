@@ -31,6 +31,7 @@ class LoginPage extends React.Component {
     };
 
     this.processForm = this.processForm.bind(this);
+    this.gmailSubmit = this.gmailSubmit.bind(this);
     this.changeUser = this.changeUser.bind(this);
   }
 
@@ -84,7 +85,14 @@ class LoginPage extends React.Component {
     });
     xhr.send(formData);
   }
-
+  /**
+   * Process the gmail form.
+   *
+   * @param {object} res - the gmail response object
+   */
+  gmailSubmit(res) {
+    console.log(res);
+  }
   /**
    * Change the user object.
    *
@@ -111,6 +119,7 @@ class LoginPage extends React.Component {
         errors={this.state.errors}
         successMessage={this.state.successMessage}
         user={this.state.user}
+        gmailSubmit={this.gmailSubmit}
       />
     );
   }
