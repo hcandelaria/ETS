@@ -1,4 +1,4 @@
 {
-  "dbUri": "mongodb://localhost/react_passport",
-  "jwtSecret": "a secret phrase!!"
+  "dbUri": "mongodb://localhost/exp_talent_system",
+  "jwtSecret": "EXPRESSLIFE"
 }

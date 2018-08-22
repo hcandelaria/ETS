@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Theme from './components/Theme.jsx';
 // import routes from './routes.js';
 
 import {
@@ -75,12 +76,12 @@ class Main extends Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider muiTheme={getMuiTheme(Theme)}>
         <Router>
           <div>
             <div className="top-bar">
               <div className="top-bar-left">
-                <Link to="/">React App</Link>
+                <Link to="/">EXPRESS</Link>
               </div>
               {this.state.authenticated ? (
                 <div className="top-bar-right">
