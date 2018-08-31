@@ -1,69 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import { GoogleLogin } from 'react-google-login';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
 
-const googleLoginStyle = {
-  color: '#ffffff',
-  width: '100px',
+const styles = {
+  button:{
+    margin: '0px 5px',
+  },
 }
-
 const LoginForm = ({
   onSubmit,
   onChange,
   errors,
   successMessage,
   user,
-  toggleAuthenticateStatus,
-  gmailSubmit
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
+    <form  onSubmit={onSubmit} autoComplete="off">
       <h2 className="card-heading">Login</h2>
 
-      {successMessage && <p className="success-message">{successMessage}</p>}
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
+      {successMessage && <p className="success-message center">{successMessage}</p>}
+      {errors.summary && <p className="error-message center">{errors.summary}</p>}
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Email"
+          label="Email"
           name="email"
-          errorText={errors.email}
+          error={errors.email}
           onChange={onChange}
-          value={user.email}
         />
       </div>
 
       <div className="field-line">
         <TextField
-          floatingLabelText="Password"
+          label="Password"
           type="password"
           name="password"
+          error={errors.password}
           onChange={onChange}
-          errorText={errors.password}
-          value={user.password}
         />
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Log in" primary />
+        <Button type="submit" onSubmit={onSubmit} style={styles.button} variant="contained" color="primary">
+          Log in
+        </Button>
+        <Button type="submit" style={styles.button} variant="contained" color="primary">
+          Gmail
+        </Button>
       </div>
 
-      <CardText>Don't have an account? <Link to={'/signup'}>Create one</Link>.</CardText>
+      <CardContent>Don't have an account? <Link to={'/signup'}>Create one</Link>.</CardContent>
     </form>
   </Card>
 );
-
 LoginForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   successMessage: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
-  gmailSubmit: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

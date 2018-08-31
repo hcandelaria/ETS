@@ -1,23 +1,16 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
+const Schema = mongoose.Schema;
 
 // define the User model schema
 const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    index: { unique: true }
-  },
+  email: {  type: String, index: { unique: true } },
   password: String,
-  store: String
+  store: String,
 });
 
 
-/**
- * Compare the passed password with the value in the database. A model method.
- *
- * @param {string} password
- * @returns {object} callback
- */
+
 UserSchema.methods.comparePassword = function comparePassword(password, callback) {
   bcrypt.compare(password, this.password, callback);
 };

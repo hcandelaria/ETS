@@ -1,17 +1,18 @@
 body {
   margin: 0;
   font-size: 16px;
+  background-color: #000000;
 }
 
 a {
-  color: #000000;
+  color: #DB0632;
   font-weight: bold;
   text-decoration: none;
   transition: color 0.4s;
 }
 
 a:hover {
-  color: #db0632;
+  color: #DB0632;
 }
 
 .text-center {
@@ -58,10 +59,10 @@ a:hover {
 
 .error-message {
   padding: 0 16px;
-  color: tomato;
+  color: #FFEB3B;
 }
 
 .success-message {
   padding: 0 16px;
-  color: green;
+  color: #008000;
 }

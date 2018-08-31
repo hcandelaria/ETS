@@ -28,7 +28,7 @@ function validateSignupForm(payload) {
 
   if (!payload || typeof payload.store !== 'string' || payload.store.trim().length === 0) {
     isFormValid = false;
-    errors.store = 'Please provide your store number.';
+    errors.store = 'Please provide your store.';
   }
 
   if (!isFormValid) {
@@ -148,5 +148,6 @@ router.post('/login', (req, res, next) => {
     });
   })(req, res, next);
 });
+
 
 module.exports = router;

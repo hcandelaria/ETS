@@ -13,7 +13,6 @@ const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
-  console.log('klk')
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Gmail API.
   authorize(JSON.parse(content), listMessages)
@@ -26,6 +25,7 @@ fs.readFile('credentials.json', (err, content) => {
  * @param {function} callback The callback to call with the authorized client.
  */
 const authorize = (credentials, callback) => {
+  console.log(credentials)
   const {client_secret, client_id, redirect_uris} = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
       client_id, client_secret, redirect_uris[0]);
@@ -100,6 +100,7 @@ const listLabels = (auth) => {
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
 const listMessages = (auth) => {
+  // console.log(auth);
   const gmail = google.gmail({version: 'v1', auth});
   gmail.users.messages.list({
     userId: 'me',
@@ -170,7 +171,7 @@ const getMessage = (auth, messageId) => {
       }
     });
     // console.log(mimeParts);
-    console.log(applicant);
+    // console.log(applicant);
 
   });
 }

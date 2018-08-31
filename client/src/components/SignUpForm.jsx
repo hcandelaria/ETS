@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 
 const SignUpForm = ({
@@ -11,49 +12,67 @@ const SignUpForm = ({
   onChange,
   errors,
   user,
+  message,
 }) => (
   <Card className="container">
-    <form action="/" onSubmit={onSubmit}>
+    <form  onSubmit={onSubmit} autoComplete="off">
       <h2 className="card-heading">Sign Up</h2>
-
-      {errors.summary && <p className="error-message">{errors.summary}</p>}
-
+      {
+        message &&
+        <p className="success-message center"> {message}</p>
+      }
+      {
+        errors.response &&
+        <p className="error-message center"> {errors.response.data.message}</p>
+      }
+      {
+        errors.response &&
+        <p className="error-message center">{errors.response.data.errors.store}</p>
+      }
       <div className="field-line">
         <TextField
-          floatingLabelText="Store number:"
+          label="Store"
           name="store"
-          errorText={errors.store}
+          error={(errors.response && errors.response.data.errors.store)}
           onChange={onChange}
           value={user.store}
         />
       </div>
-
+      {
+        errors.response &&
+        <p className="error-message center">{errors.response.data.errors.email}</p>
+      }
       <div className="field-line">
         <TextField
-          floatingLabelText="Email:"
+          label="Email"
           name="email"
-          errorText={errors.email}
+          error={(errors.response && errors.response.data.errors.email)}
           onChange={onChange}
           value={user.email}
         />
       </div>
-
+      {
+        errors.response &&
+        <p className="error-message center">{errors.response.data.errors.password}</p>
+      }
       <div className="field-line">
         <TextField
-          floatingLabelText="Password:"
+          label="Password"
           type="password"
           name="password"
           onChange={onChange}
-          errorText={errors.password}
+          error={(errors.response && errors.response.data.errors.password)}
           value={user.password}
         />
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Create New Account" primary />
+        <Button type="submit" variant="contained" color="primary">
+          Create New Account
+        </Button>
       </div>
 
-      <CardText>Already have an account? <Link to={'/login'}>Log in</Link></CardText>
+      <CardContent>Already have an account? <Link to={'/'}>Log in</Link></CardContent>
     </form>
   </Card>
 );
@@ -62,7 +81,8 @@ SignUpForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default SignUpForm;

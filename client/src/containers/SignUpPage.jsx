@@ -1,9 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { changeUser, createUser } from '../actions/usersActions'
+
 import SignUpForm from '../components/SignUpForm.jsx';
 
-
-class SignUpPage extends React.Component {
+@connect((store)=>{
+  return{
+    errors: store.users.errors,
+    user: store.users.user,
+    location: store.router.location.pathname,
+    message: store.users.message,
+  }
+})
+export default class SignUpPage extends React.Component {
 
   /**
    * Class constructor.
@@ -11,15 +22,6 @@ class SignUpPage extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    // set the initial component state
-    this.state = {
-      errors: {},
-      user: {
-        email: '',
-        store: '',
-        password: ''
-      }
-    };
 
     this.processForm = this.processForm.bind(this);
     this.changeUser = this.changeUser.bind(this);
@@ -35,42 +37,23 @@ class SignUpPage extends React.Component {
     event.preventDefault();
 
     // create a string for an HTTP body message
-    const store = encodeURIComponent(this.state.user.store);
-    const email = encodeURIComponent(this.state.user.email);
-    const password = encodeURIComponent(this.state.user.password);
+    const store = encodeURIComponent(this.props.user.store);
+    const email = encodeURIComponent(this.props.user.email);
+    const password = encodeURIComponent(this.props.user.password);
     const formData = `store=${store}&email=${email}&password=${password}`;
 
-    // create an AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('post', '/auth/signup');
-    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhr.responseType = 'json';
-    xhr.addEventListener('load', () => {
-      if (xhr.status === 200) {
-        // success
+    Promise.resolve(this.props.dispatch(createUser(formData)))
+      .then( () =>{
 
-        // change the component-container state
-        this.setState({
-          errors: {}
-        });
+        //Clear LoginForm
+        this.props.dispatch({
+          type:"UPDATE_USER",
+          payload: {}
+        })
 
-        // set a message
-        localStorage.setItem('successMessage', xhr.response.message);
-
-        // redirect user after sign up to login page
-        this.props.history.push('/login');
-      } else {
-        // failure
-
-        const errors = xhr.response.errors ? xhr.response.errors : {};
-        errors.summary = xhr.response.message;
-
-        this.setState({
-          errors
-        });
-      }
-    });
-    xhr.send(formData);
+      }).catch( (err) =>{
+        console.log('SignUpPage error: ', err);
+      })
   }
 
   /**
@@ -79,13 +62,8 @@ class SignUpPage extends React.Component {
    * @param {object} event - the JavaScript event object
    */
   changeUser(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user
-    });
+    event.preventDefault();
+    this.props.dispatch(changeUser(event, this.props.user))
   }
 
   /**
@@ -93,19 +71,16 @@ class SignUpPage extends React.Component {
    */
   render() {
     return (
-      <SignUpForm
-        onSubmit={this.processForm}
-        onChange={this.changeUser}
-        errors={this.state.errors}
-        user={this.state.user}
-      />
+      <div>
+        <SignUpForm
+          onSubmit={this.processForm}
+          onChange={this.changeUser}
+          errors={this.props.errors}
+          user={this.props.user}
+          message={this.props.message}
+        />
+      </div>
     );
   }
 
 }
-
-SignUpPage.contextTypes = {
-  router: PropTypes.object.isRequired
-};
-
-export default SignUpPage;
