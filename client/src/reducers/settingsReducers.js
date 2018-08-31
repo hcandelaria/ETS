@@ -1,3 +1,6 @@
+import Auth from '../modules/Auth';
+
+
 export default function reducer ( state ={
   authenticated: false,
   row : '',
@@ -54,6 +57,7 @@ export default function reducer ( state ={
     }
     case 'UPDATE_AUTHENTICATED' : {
       if(state.authenticated === true){
+        Auth.deauthenticateUser();
         return {...state, authenticated: false}
       }else {
         return {...state, authenticated: true}

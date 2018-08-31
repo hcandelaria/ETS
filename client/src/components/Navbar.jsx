@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Auth from '../modules/Auth';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux'
+import {Link, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux'
 import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
 
-const appBarTitleStyle={
-  textAlign: "left"
-}
+
 const styles = {
   link: {
     margin: '10px',
@@ -18,52 +17,61 @@ const styles = {
       background: '#FFFFFF'
     }
   },
-  button: {
-    margin: '5px',
+  button:{
+    margin: '0px 10px',
+  },
+  flex: {
+    flexGrow: 1
   }
 }
 
-@connect((store)=>{
-  return{
-    auth: store.settings.authenticated
-  }
+@connect((store) => {
+  return {auth: store.settings.authenticated}
 })
-export default class Navbar extends React.Component{
-  signIn(){
+export default class Navbar extends React.Component {
+  /**
+   * Class constructor.
+   */
+  constructor(props, context) {
+    super(props, context);
 
+    this.signOut = this.signOut.bind(this);
+    this.signIn = this.signIn.bind(this);
   }
-  signOut(){
-    console.log('klk')
+  /**
+   * This method will be executed after initial rendering.
+   */
+  componentDidMount() {
+    Auth.isUserAuthenticated()
+      ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
+      : this.props.dispatch(push('/'));
+  }
+  signIn() {}
+  signOut() {
     this.props.dispatch({type: 'UPDATE_AUTHENTICATED'});
-    Auth.deauthenticateUser();
     this.props.dispatch(push('/'));
   }
-  componentDidMount(){
-    Auth.isUserAuthenticated() ?
-      this.props.dispatch({type: 'UPDATE_AUTHENTICATED'}) :
-      this.props.dispatch(push('/'));
-  }
-  render(){
-    return(
-      <AppBar
-        position="static">
-        <Typography variant="display2" gutterBottom>
+
+  render() {
+    return (<AppBar position="static">
+      <Toolbar>
+
+        <Typography variant="display2" color="inherit" style={styles.flex}>
           <Link to='/' style={styles.link}>EXPRESS</Link>
+        </Typography>
         {
-          this.props.auth ?
-          (
-            <div>
+          this.props.auth
+            ? (<div>
               <div className="top-bar-right">
-                <Button variant="contained" color="secondary" onSubmit={this.signOut}>
+                <Button variant="contained" style={styles.button} color="secondary" onClick={this.signOut}>
                   SIGN OUT
                 </Button>
-                <Button variant="contained" color="secondary" component={Link} to="/dashboard">
+                <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/dashboard">
                   Dashboard
                 </Button>
               </div>
-            </div>
-          ):(
-            <div className="top-bar-right">
+            </div>)
+            : (<div className="top-bar-right">
               <div>
                 <div className="top-bar-right">
                   <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/">
@@ -74,11 +82,10 @@ export default class Navbar extends React.Component{
                   </Button>
                 </div>
               </div>
-            </div>
-          )
+            </div>)
         }
-      </Typography>
-      </AppBar>
-    )
+      </Toolbar>
+
+    </AppBar>);
   }
 }
