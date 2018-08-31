@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 //  Import Component
 import Card from '@material-ui/core/Card';
-
+import ApplicantPage from './ApplicantPage.jsx';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
@@ -201,20 +201,7 @@ export default class DashboardPage extends React.Component {
    * This method will be executed after initial rendering.
    */
   componentDidMount() {
-    //Get user Items
-    if(this.props._id !== ''){
-      this.props.dispatch(fetchItems(this.props._id));
-    }else if (localStorage.getItem('_id') && Auth.getToken()){
-      this.props.dispatch({type: 'UPDATE_ID',  payload: localStorage.getItem('_id')});
 
-      Promise.resolve(this.props.dispatch({type: 'UPDATE_AUTHENTICATED'}))
-        .then( () =>{
-          this.props.dispatch(fetchItems(this.props._id));
-        })
-    }else{
-      alert('Please log in!');
-      this.props.dispatch(push('/dashboard'));
-    }
   };
   //  Handle sell button function
   sellButtonValidation(){
@@ -270,7 +257,7 @@ export default class DashboardPage extends React.Component {
           </h2>
           </Card>
         <Card className='container'>
-
+          <ApplicantPage />
         </Card>
       </div>
     )

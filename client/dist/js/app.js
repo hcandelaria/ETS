@@ -42742,11 +42742,11 @@
 	    }
 	  }, {
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	    // if(Auth.getToken()!== null){
-	    //   this.props.dispatch(push('/'))
-	    // }
-
+	    value: function componentDidMount() {
+	      if (_Auth2.default.getToken() !== null) {
+	        this.props.dispatch((0, _reactRouterRedux.push)('/dashboard'));
+	      }
+	    }
 	    /**
 	     * Render the component.
 	     */
@@ -42875,7 +42875,7 @@
 	        ),
 	        _react2.default.createElement(
 	          _Button2.default,
-	          { type: 'submit', style: styles.button, variant: 'contained', color: 'primary' },
+	          { type: 'submit', disabled: true, style: styles.button, variant: 'contained', color: 'primary' },
 	          'Gmail'
 	        )
 	      ),
@@ -54685,6 +54685,10 @@
 
 	var _Card2 = _interopRequireDefault(_Card);
 
+	var _ApplicantPage = __webpack_require__(414);
+
+	var _ApplicantPage2 = _interopRequireDefault(_ApplicantPage);
+
 	var _Button = __webpack_require__(218);
 
 	var _Button2 = _interopRequireDefault(_Button);
@@ -54906,23 +54910,7 @@
 
 	  }, {
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this6 = this;
-
-	      //Get user Items
-	      if (this.props._id !== '') {
-	        this.props.dispatch((0, _itemsActions.fetchItems)(this.props._id));
-	      } else if (localStorage.getItem('_id') && _Auth2.default.getToken()) {
-	        this.props.dispatch({ type: 'UPDATE_ID', payload: localStorage.getItem('_id') });
-
-	        Promise.resolve(this.props.dispatch({ type: 'UPDATE_AUTHENTICATED' })).then(function () {
-	          _this6.props.dispatch((0, _itemsActions.fetchItems)(_this6.props._id));
-	        });
-	      } else {
-	        alert('Please log in!');
-	        this.props.dispatch((0, _reactRouterRedux.push)('/dashboard'));
-	      }
-	    }
+	    value: function componentDidMount() {}
 	  }, {
 	    key: 'sellButtonValidation',
 
@@ -54999,7 +54987,11 @@
 	            ' Inventory'
 	          )
 	        ),
-	        _react2.default.createElement(_Card2.default, { className: 'container' })
+	        _react2.default.createElement(
+	          _Card2.default,
+	          { className: 'container' },
+	          _react2.default.createElement(_ApplicantPage2.default, null)
+	        )
 	      );
 	    }
 	  }]);
@@ -55407,6 +55399,510 @@
 	};
 
 	exports.default = PageNotfound;
+
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _ApplicantsTablet = __webpack_require__(416);
+
+	var _ApplicantsTablet2 = _interopRequireDefault(_ApplicantsTablet);
+
+	var _Card = __webpack_require__(283);
+
+	var _Card2 = _interopRequireDefault(_Card);
+
+	var _axios = __webpack_require__(365);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import { GoogleLogin } from 'react-google-login';
+
+	// Google credentials
+	var credentials = {
+	  apiKey: ("AIzaSyBSIk9SubLnll3cOUlhLMCil8s5siKYE_8"),
+	  clientId: ("252856401268-el58f7nqvs8s7v8k91pfprvj8pikpagi.apps.googleusercontent.com"),
+	  discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"],
+	  scope: 'https://www.googleapis.com/auth/gmail.readonly'
+
+	  /**
+	   *  Called when the signed in status changes, to update the UI
+	   *  appropriately. After a sign-in, the API is called.
+	   */
+	};var updateSigninStatus = function updateSigninStatus(isSignedIn) {
+	  if (isSignedIn) {
+	    // authorizeButton.style.display = 'none';
+	    // signoutButton.style.display = 'block';
+	  } else {
+	      // authorizeButton.style.display = 'block';
+	      // signoutButton.style.display = 'none';
+	    }
+	};
+	/**
+	 * Print all Labels in the authorized user's inbox. If no labels
+	 * are found an appropriate message is printed.
+	 */
+	var listLabels = function listLabels() {
+	  gapi.client.gmail.users.labels.list({ 'userId': 'me' }).then(function (response) {
+	    var labels = response.result.labels;
+	    if (labels && labels.length > 0) {
+	      for (var i = 0; i < labels.length; i++) {
+	        var label = labels[i];
+	        console.log(label.name);
+	      }
+	    } else {
+	      console.log('No Labels found.');
+	    }
+	  });
+	};
+	/**
+	 * Gets all the emails id in the user's account.
+	 * Creates a second call to get the emails detail.
+	 *
+	 */
+	var listMessages = function listMessages() {
+	  var applicants = [];
+
+	  gapi.client.gmail.users.messages.list({
+	    userId: 'me',
+	    includeSpamTrash: false,
+	    q: 'indeedemail.com'
+	  }).then(function (res, err) {
+	    if (err) return console.log('The API returned an error: ' + err);
+	    var emails = res.result.messages;
+	    if (emails.length) {
+	      // console.log(emails)
+	      console.log('Got emails');
+	      // getMessage(auth, emails[0].id);
+	      emails.forEach(function (email) {
+	        var applicant = getMessage(email.id);
+	        applicants.push(getMessage(email.id));
+	      });
+	    } else {
+	      console.log('No emails found.');
+	    }
+	  });
+	  return applicants;
+	};
+	/**
+	 * Get Message with given ID.
+	 * then return an array with all of them.
+	 * @param  {String} messageId ID of Message to get.
+	 * @return {object} applicant
+	 */
+	var getMessage = function getMessage(messageId) {
+
+	  var applicant = {
+	    _id: messageId,
+	    firstName: '',
+	    lastName: '',
+	    email: '',
+	    phone: '',
+	    position: '',
+	    location: '0555',
+	    step: '1'
+	  };
+
+	  gapi.client.gmail.users.messages.get({
+	    userId: 'me',
+	    id: messageId,
+	    format: 'full'
+	  }).then(function (res, err) {
+	    if (err) return console.log('The API returned an error: ' + err);
+
+	    // console.log(res);
+	    var headers = res.result.payload.headers;
+	    var mimeParts = res.result.payload.parts;
+
+	    headers.forEach(function (head) {
+	      switch (head.name) {
+	        case 'From':
+	          applicant.email = formatEmail(head.value);
+	          break;
+	        case 'Subject':
+	          applicant = getNamePosition(applicant, head.value);
+	          break;
+	        default:
+	      };
+	    });
+
+	    mimeParts.forEach(function (part) {
+	      // console.log(part.mimeType);
+	      if (part.mimeType == 'multipart/alternative' || part.mimeType == 'multipart/mixed') {
+
+	        // console.log(part.parts);
+	      }
+	    });
+	    // console.log(mimeParts);
+	    // handleApplicantsArray(applicant);
+	    // console.log(applicant);
+	  });
+	  return applicant;
+	};
+	/**
+	 * Returns the email.
+	 *
+	 * @param  {String} str string cotainig email
+	 */
+	var formatEmail = function formatEmail(str) {
+	  var matches = str.match(/\<(.*?)\>/);
+
+	  if (matches) {
+	    return matches[1];
+	  } else {
+	    return 'getEmail - ERROR NO EMAIL!';
+	  }
+	};
+
+	/**
+	 * Get first name last name and position from the given string.
+	 *
+	 * @param {object.applicant} applicant object to be updated and return.
+	 * @param  {String} str whole string with the details.
+	 */
+	var getNamePosition = function getNamePosition(applicant, str) {
+	  var matches = str.split(" - ");
+	  var name = matches[1].split(' ');
+
+	  applicant.position = matches[0].replace('candidate', '').trim();
+	  applicant.firstName = name[0];
+	  applicant.lastName = name[1];
+	  return applicant;
+	};
+
+	var ApplicantPage = function (_React$Component) {
+	  _inherits(ApplicantPage, _React$Component);
+
+	  /**
+	   * Class constructor.
+	   */
+	  function ApplicantPage(props) {
+	    _classCallCheck(this, ApplicantPage);
+
+	    var _this = _possibleConstructorReturn(this, (ApplicantPage.__proto__ || Object.getPrototypeOf(ApplicantPage)).call(this, props));
+
+	    _this.state = {
+	      applicants: []
+	    };
+
+	    _this.gmailSubmit = _this.gmailSubmit.bind(_this);
+	    _this.gmailFailed = _this.gmailFailed.bind(_this);
+	    _this.handleClientLoad = _this.handleClientLoad.bind(_this);
+	    _this.initClient = _this.initClient.bind(_this);
+	    _this.handleAuthClick = _this.handleAuthClick.bind(_this);
+	    _this.handleApplicantsArray = _this.handleApplicantsArray.bind(_this);
+	    _this.handleGetEmails = _this.handleGetEmails.bind(_this);
+
+	    return _this;
+	  }
+	  /**
+	   *  This function will update the applicants array
+	   */
+
+
+	  _createClass(ApplicantPage, [{
+	    key: 'handleApplicantsArray',
+	    value: function handleApplicantsArray(previousState, applicants) {
+	      console.log('wowowo');
+	      // this.setState({ applicants: this.state.applicants.concat(applicants) })
+	      this.setState(function (previousState) {
+	        return {
+	          applicants: [].concat(_toConsumableArray(previousState.applicants), [applicants])
+	        };
+	      });
+	    }
+
+	    /**
+	     * This method will be executed after initial rendering.
+	     */
+
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.onload = function () {};
+	      this.handleClientLoad();
+	      this.onload();
+	    }
+
+	    /**
+	     *  On load, called to load the auth2 library and API client library.
+	     */
+
+	  }, {
+	    key: 'handleClientLoad',
+	    value: function handleClientLoad() {
+	      gapi.load('client:auth2', this.initClient);
+	    }
+	    /**
+	        *  Initializes the API client library and sets up sign-in state
+	        *  listeners.
+	        */
+
+	  }, {
+	    key: 'initClient',
+	    value: function initClient() {
+	      gapi.client.init(credentials).then(function (res) {
+	        // Listen for sign-in state changes.
+	        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+	        // Handle the initial sign-in state.
+	        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+	        // signoutButton.onclick = handleSignoutClick;
+	      }).catch(function (error) {
+	        console.log('got problems:', error);
+	      });
+	    }
+	    /**
+	     *  Sign in the user upon button click.
+	     */
+
+	  }, {
+	    key: 'handleAuthClick',
+	    value: function handleAuthClick(event) {
+	      gapi.auth2.getAuthInstance().signIn();
+	      listMessages();
+	    }
+	    /**
+	     *  Get emails from user
+	     */
+
+	  }, {
+	    key: 'handleGetEmails',
+	    value: function handleGetEmails(event) {
+	      var _this2 = this;
+
+	      var tempApplicant = listMessages();
+	      console.log('TEMP');
+	      console.log(tempApplicant);
+	      tempApplicant.forEach(function (applicant) {
+	        _this2.handleApplicantsArray(_this2.state, applicant);
+	      });
+	    }
+	    /**
+	     * Process the gmail form.
+	     *
+	     * @param {object} res - the gmail response object
+	     */
+
+	  }, {
+	    key: 'gmailSubmit',
+	    value: function gmailSubmit(res) {
+	      console.log(res);
+	    }
+	    /**
+	     * Process the gmail form.
+	     *
+	     */
+
+	  }, {
+	    key: 'gmailFailed',
+	    value: function gmailFailed(res) {
+	      console.log(res);
+	    }
+
+	    /**
+	     * Render the component.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          { id: 'authorize_button', onClick: this.handleAuthClick },
+	          'Authorize'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.handleGetEmails },
+	          'refresh'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { id: 'signout_button', onClick: this.handleAuthClick },
+	          'Sign Out'
+	        ),
+	        _react2.default.createElement(_ApplicantsTablet2.default, { applicants: this.state.applicants })
+	      );
+	    }
+	  }]);
+
+	  return ApplicantPage;
+	}(_react2.default.Component);
+
+	exports.default = ApplicantPage;
+
+/***/ }),
+/* 415 */,
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _propTypes = __webpack_require__(50);
+
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+
+	var _Card = __webpack_require__(283);
+
+	var _Card2 = _interopRequireDefault(_Card);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ApplicantsTablet = function (_React$Component) {
+	  _inherits(ApplicantsTablet, _React$Component);
+
+	  /**
+	   * Class constructor.
+	   */
+	  function ApplicantsTablet(props) {
+	    _classCallCheck(this, ApplicantsTablet);
+
+	    return _possibleConstructorReturn(this, (ApplicantsTablet.__proto__ || Object.getPrototypeOf(ApplicantsTablet)).call(this, props));
+	  }
+	  /**
+	   * This method will be executed after initial rendering.
+	   */
+
+
+	  _createClass(ApplicantsTablet, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	    /**
+	     * This method will be executed after initial rendering.
+	     */
+
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      console.log('componentDidUpdate: ', this.props.applicants.length);
+	    }
+	    /**
+	     * Render the component.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _Card2.default,
+	        { className: 'container' },
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'card-heading' },
+	          'Applicants'
+	        ),
+	        _react2.default.createElement(
+	          _Card2.default,
+	          null,
+	          _react2.default.createElement(
+	            _Card2.default
+	            // displaySelectAll={true}
+	            // adjustForCheckbox={true}
+	            // enableSelectAll={true}
+	            ,
+	            null,
+	            _react2.default.createElement(
+	              _Card2.default,
+	              null,
+	              _react2.default.createElement(
+	                _Card2.default,
+	                null,
+	                'Name'
+	              ),
+	              _react2.default.createElement(
+	                _Card2.default,
+	                null,
+	                'Position'
+	              ),
+	              _react2.default.createElement(
+	                _Card2.default,
+	                null,
+	                'Email'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _Card2.default
+	            // stripedRows={true}
+	            // deselectOnClickaway={false}
+	            ,
+	            null,
+	            this.props.applicants.map(function (applicant) {
+	              return _react2.default.createElement(
+	                _Card2.default,
+	                { key: applicant._id, id: applicant._id },
+	                _react2.default.createElement(
+	                  _Card2.default,
+	                  null,
+	                  applicant.name
+	                ),
+	                _react2.default.createElement(
+	                  _Card2.default,
+	                  null,
+	                  applicant.position
+	                ),
+	                _react2.default.createElement(
+	                  _Card2.default,
+	                  null,
+	                  applicant.email
+	                )
+	              );
+	            })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return ApplicantsTablet;
+	}(_react2.default.Component);
+
+	ApplicantsTablet.propTypes = {
+	  applicants: _propTypes2.default.array.isRequired
+	};
+
+	exports.default = ApplicantsTablet;
 
 /***/ })
 /******/ ]);

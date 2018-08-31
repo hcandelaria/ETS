@@ -49,7 +49,7 @@ const LoginForm = ({
         <Button type="submit" onSubmit={onSubmit} style={styles.button} variant="contained" color="primary">
           Log in
         </Button>
-        <Button type="submit" style={styles.button} variant="contained" color="primary">
+        <Button type="submit" disabled style={styles.button} variant="contained" color="primary">
           Gmail
         </Button>
       </div>

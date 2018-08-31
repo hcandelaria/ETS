@@ -1,10 +1,11 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard.jsx';
 import ApplicantsTablet from '../components/ApplicantsTablet.jsx'
 
-import { Card } from 'material-ui/Card';
-import { Tabs, Tab} from 'material-ui/Tabs';
-import { GoogleLogin } from 'react-google-login';
+import Card from '@material-ui/core/Card';
+import Tabs from '@material-ui/core/Card';
+import Tab from '@material-ui/core/Card';
+
+// import { GoogleLogin } from 'react-google-login';
 
 import axios from 'axios';
 

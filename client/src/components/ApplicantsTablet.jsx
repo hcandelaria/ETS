@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { GoogleLogin } from 'react-google-login';
-import { Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/Card';
+import Table from '@material-ui/core/Card';
+import TableBody from '@material-ui/core/Card';
+import TableHeader from '@material-ui/core/Card';
+import TableHeaderColumn from '@material-ui/core/Card';
+import TableRow from '@material-ui/core/Card';
+import TableRowColumn from '@material-ui/core/Card';
+
 
 
 class ApplicantsTablet extends React.Component{
@@ -29,14 +35,12 @@ class ApplicantsTablet extends React.Component{
   render() {
     return (
       <Card className="container">
-        <CardTitle
-          title="Applicants"
-        />
+        <h2 className="card-heading">Applicants</h2>
         <Table>
           <TableHeader
-            displaySelectAll={true}
-            adjustForCheckbox={true}
-            enableSelectAll={true}
+            // displaySelectAll={true}
+            // adjustForCheckbox={true}
+            // enableSelectAll={true}
           >
             <TableRow>
               <TableHeaderColumn>Name</TableHeaderColumn>
@@ -45,8 +49,9 @@ class ApplicantsTablet extends React.Component{
             </TableRow>
           </TableHeader>
           <TableBody
-            stripedRows={true}
-            deselectOnClickaway={false}>
+            // stripedRows={true}
+            // deselectOnClickaway={false}
+            >
             {
               this.props.applicants.map((applicant) =>{
                 return(

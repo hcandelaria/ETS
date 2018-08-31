@@ -76,9 +76,9 @@ export default class LoginPage extends React.Component {
     this.props.dispatch(changeUser(event, this.props.user))
   }
   componentDidMount() {
-    // if(Auth.getToken()!== null){
-    //   this.props.dispatch(push('/'))
-    // }
+    if(Auth.getToken()!== null){
+      this.props.dispatch(push('/dashboard'))
+    }
   }
   /**
    * Render the component.
