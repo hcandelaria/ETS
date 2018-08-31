@@ -261,5 +261,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# app
+client/dist/js/*
 
 # End of https://www.gitignore.io/api/node,windows,reactnative

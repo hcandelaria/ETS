@@ -33,9 +33,15 @@ export default class Navbar extends React.Component{
 
   }
   signOut(){
+    console.log('klk')
     this.props.dispatch({type: 'UPDATE_AUTHENTICATED'});
     Auth.deauthenticateUser();
     this.props.dispatch(push('/'));
+  }
+  componentDidMount(){
+    Auth.isUserAuthenticated() ?
+      this.props.dispatch({type: 'UPDATE_AUTHENTICATED'}) :
+      this.props.dispatch(push('/'));
   }
   render(){
     return(
