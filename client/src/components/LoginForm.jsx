@@ -23,14 +23,15 @@ const LoginForm = ({
     <form  onSubmit={onSubmit} autoComplete="off">
       <h2 className="card-heading">Login</h2>
 
-      {successMessage && <p className="success-message center">{successMessage}</p>}
-      {errors.summary && <p className="error-message center">{errors.summary}</p>}
-
+      {
+        errors.response &&
+        <p className="error-message center"> {errors.response.data.message}</p>
+      }
       <div className="field-line">
         <TextField
           label="Email"
           name="email"
-          error={errors.email}
+          error={(errors.response && errors.response.data.message)}
           onChange={onChange}
         />
       </div>
@@ -40,7 +41,7 @@ const LoginForm = ({
           label="Password"
           type="password"
           name="password"
-          error={errors.password}
+          error={(errors.response && errors.response.data.message)}
           onChange={onChange}
         />
       </div>

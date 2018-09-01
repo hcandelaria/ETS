@@ -3,7 +3,7 @@ import axios from 'axios';
 import Auth from '../modules/Auth';
 import { push } from 'react-router-redux';
 
-//  Export functions
+
 export function fetchUser(formData){
 
   return function(dispatch) {
@@ -24,8 +24,8 @@ export function fetchUser(formData){
       })
       //Catch error
       .catch((err) =>{
-        console.log(err)
-        dispatch({type: 'FETCH_USER_ERROR', payload: err });
+        console.log('test:', err)
+        dispatch({type: 'CREATE_USER_ERROR', payload: err });
       })
   }
 }
@@ -43,12 +43,10 @@ export function createUser(formData){
     //Post request for login user
     axios.post(`/auth/signup`, formData)
       .then((res) => {
-
         dispatch({type: 'CREATE_USER_FULFILLED', payload: {}, response: res.data.message, status: 'success'});
       })
       //Catch error
       .catch((err) =>{
-        console.log(err)
         dispatch({type: 'CREATE_USER_ERROR', payload: err });
       })
   }
