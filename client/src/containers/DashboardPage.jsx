@@ -29,10 +29,7 @@ const buttonStyle = {
   return{
     location: store.router.location.pathname,
     _id: store.users._id,
-    itemArray: store.items.itemArray,
-    errors: store.items.errors,
     row: store.settings.row,
-    item: store.items.item,
     user: store.users.user,
     login: store.users.login,
     secretData: store.settings.secretData,
@@ -252,10 +249,6 @@ export default class DashboardPage extends React.Component {
   render() {
     return (
       <div>
-        <Card className='container'>
-          <h2 className="card-heading"> Inventory
-          </h2>
-          </Card>
         <Card className='container'>
           <ApplicantPage />
         </Card>

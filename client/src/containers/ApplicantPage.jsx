@@ -1,14 +1,20 @@
 import React from 'react';
-import ApplicantsTablet from '../components/ApplicantsTablet.jsx'
+import ApplicantsTable from '../components/ApplicantsTable.jsx'
 
 import Card from '@material-ui/core/Card';
 import Tabs from '@material-ui/core/Card';
 import Tab from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
 
 // import { GoogleLogin } from 'react-google-login';
 
 import axios from 'axios';
 
+const styles = {
+  flex: {
+    flexGrow: 1
+  }
+}
 
 // Google credentials
 const credentials = {
@@ -272,7 +278,10 @@ class ApplicantPage extends React.Component{
         <button id="authorize_button" onClick={this.handleAuthClick}>Authorize</button>
         <button  onClick={this.handleGetEmails}>refresh</button>
         <button id="signout_button" onClick={this.handleAuthClick}>Sign Out</button>
-        <ApplicantsTablet applicants={this.state.applicants}/>
+        <Card className="container">
+          <Typography variant="display2" color="inherit" style={styles.flex}>Applicants</Typography>
+          <ApplicantsTable applicants={this.state.applicants}/>
+        </Card>
       </div>
     );
 

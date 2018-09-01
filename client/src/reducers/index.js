@@ -5,12 +5,12 @@ import { ConnectedRouter as Router, routerReducer, routerMiddleware } from 'reac
 
 //Import reducers to be exporter
 import users from './usersReducers';
-import items from './applicantsReducers';
+import applicants from './applicantsReducers';
 import settings from './settingsReducers';
 
 export default combineReducers({
   users,
-  items,
+  applicants,
   settings,
   router : routerReducer
 })

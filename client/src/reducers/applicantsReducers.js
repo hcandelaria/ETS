@@ -6,7 +6,7 @@ export default function reducer( state = {
   updatingApplicant: false,
   deletingApplicant: false,
   fetched: false,
-  applicantArray: [],
+  applicantsArray: [],
   data: [],
   errors: {},
   applicant: {
