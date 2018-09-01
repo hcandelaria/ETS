@@ -1,14 +1,16 @@
 import React from 'react';
 import ApplicantsTable from '../components/ApplicantsTable.jsx'
-
 import Card from '@material-ui/core/Card';
 import Tabs from '@material-ui/core/Card';
 import Tab from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-
-// import { GoogleLogin } from 'react-google-login';
-
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { store } from '../modules/store.js';
+
+//  Import Actions
+import { updateApplicant } from '../actions/applicantsActions';
+// import { GoogleLogin } from 'react-google-login';
 
 const styles = {
   flex: {
@@ -60,7 +62,6 @@ const listLabels = () => {
  *
  */
 const listMessages = () => {
-  let applicants = [];
 
   gapi.client.gmail.users.messages.list({
     userId: 'me',
@@ -74,14 +75,12 @@ const listMessages = () => {
       console.log('Got emails')
       // getMessage(auth, emails[0].id);
       emails.forEach((email) =>{
-        let applicant = getMessage(email.id);
-        applicants.push(getMessage(email.id));
+        getMessage(email.id);
       })
     }else{
       console.log('No emails found.');
     }
   });
-  return(applicants);
 }
 /**
  * Get Message with given ID.
@@ -135,8 +134,9 @@ const getMessage = (messageId) => {
     // console.log(mimeParts);
     // handleApplicantsArray(applicant);
     // console.log(applicant);
+    store.dispatch(updateApplicant(applicant));
   });
-  return applicant;
+
 }
 /**
  * Returns the email.
@@ -169,18 +169,21 @@ const getNamePosition = (applicant, str) => {
   applicant.lastName = name[1];
   return applicant;
 }
+//Connect to redux store
+@connect((store) => {
+  return{
 
+    applicantsArray: store.applicants.applicantsArray,
+  }
+})
 class ApplicantPage extends React.Component{
   /**
    * Class constructor.
    */
-  constructor(props) {
-    super(props);
+  constructor(props,context) {
+    super(props, context);
 
-    this.state = {
-      applicants: [],
-    };
-
+    //  Bind function to this component
     this.gmailSubmit = this.gmailSubmit.bind(this);
     this.gmailFailed = this.gmailFailed.bind(this);
     this.handleClientLoad = this.handleClientLoad.bind(this);
@@ -193,12 +196,10 @@ class ApplicantPage extends React.Component{
   /**
    *  This function will update the applicants array
    */
-  handleApplicantsArray(previousState,applicants) {
-    console.log('wowowo')
-    // this.setState({ applicants: this.state.applicants.concat(applicants) })
-    this.setState(previousState => ({
-        applicants: [...previousState.applicants, applicants]
-    }));
+  handleApplicantsArray(applicants) {
+    console.log('applicants')
+    console.log(applicants)
+    console.log('HECTOR LOOK I SHOULD NOT BE CALLED!');
   }
 
   /**
@@ -246,12 +247,7 @@ class ApplicantPage extends React.Component{
    *  Get emails from user
    */
   handleGetEmails(event) {
-    let tempApplicant = listMessages();
-    console.log('TEMP');
-    console.log(tempApplicant);
-    tempApplicant.forEach(applicant => {
-      this.handleApplicantsArray(this.state ,applicant);
-    })
+    listMessages();
   }
   /**
    * Process the gmail form.
@@ -280,7 +276,7 @@ class ApplicantPage extends React.Component{
         <button id="signout_button" onClick={this.handleAuthClick}>Sign Out</button>
         <Card className="container">
           <Typography variant="display2" color="inherit" style={styles.flex}>Applicants</Typography>
-          <ApplicantsTable applicants={this.state.applicants}/>
+          <ApplicantsTable applicants={this.props.applicantsArray}/>
         </Card>
       </div>
     );

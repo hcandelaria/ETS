@@ -37,7 +37,7 @@ const data = [
 ]
 
 const ApplicantsTable = ({
-  applicantsArray
+  applicants
 }) => (
   <Table aria-labelledby="tableTitle">
     <TableHead style={styles.TableHead}>
@@ -77,10 +77,10 @@ const ApplicantsTable = ({
     </TableHead>
 
     <TableBody>
-      {data
+      {applicants
         // .sort(getSorting(order, orderBy))
         // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map(n => {
+        .map(applicant => {
           // const isSelected = this.isSelected(n.id);
           return (
             <TableRow
@@ -89,7 +89,7 @@ const ApplicantsTable = ({
               role="checkbox"
               // aria-checked={isSelected}
               tabIndex={-1}
-              key={n.id}
+              key={applicant.id}
               // selected={isSelected}
             >
               <TableCell padding="checkbox">
@@ -97,10 +97,10 @@ const ApplicantsTable = ({
                 {/* <Checkbox checked={isSelected} /> */}
               </TableCell>
               <TableCell component="th" scope="row" padding="none">
-                {n.name}
+                {`${applicant.firstName} ${applicant.lastName}`}
               </TableCell>
-              <TableCell>{n.position}</TableCell>
-              <TableCell>{n.email}</TableCell>
+              <TableCell>{applicant.position}</TableCell>
+              <TableCell>{applicant.email}</TableCell>
             </TableRow>
           );
         })}

@@ -11,14 +11,9 @@ import ApplicantPage from './ApplicantPage.jsx';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
+import { updateApplicant } from '../actions/applicantsActions';
 
-//  Import Actions
-import { fetchItems,
-         createItem,
-         onChangeItem,
-         sellItem,
-         updateItem,
-         deleteItem, } from '../actions/itemsActions';
+
 
 //Styles
 const buttonStyle = {
