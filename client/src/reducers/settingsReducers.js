@@ -3,6 +3,7 @@ import Auth from '../modules/Auth';
 
 export default function reducer ( state ={
   authenticated: false,
+  gmailSignedin: false,
   row : '',
   secretData: '',
   errors: {},
@@ -15,6 +16,9 @@ export default function reducer ( state ={
 }, action ) {
 
   switch(action.type){
+    case 'UPDATE_GMAIL_SIGNEDIN' : {
+        return {...state, gmailSignedin: action.payload}
+    }
     case 'UPDATE_ROW' : {
       return {...state, row: action.payload}
     }

@@ -2,7 +2,17 @@
 import axios from 'axios';
 import Auth from '../modules/Auth';
 import { calculateTable, } from '../actions/settingsActions';
+import { push } from 'react-router-redux';
 
+
+export function updateApplicant (applicant) {
+  return function(dispatch) {
+    dispatch({
+      type: 'CREATING_APPLICANT',
+      payload: applicant
+    })
+  }
+}
 //  Export functions
 export function fetchItems(id){
   return function(dispatch) {

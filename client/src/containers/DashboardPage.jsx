@@ -11,19 +11,14 @@ import ApplicantPage from './ApplicantPage.jsx';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 
+import { updateApplicant } from '../actions/applicantsActions';
 
-//  Import Actions
-import { fetchItems,
-         createItem,
-         onChangeItem,
-         sellItem,
-         updateItem,
-         deleteItem, } from '../actions/itemsActions';
+const styles = {
+  marginTop: {
+    marginTop: '20px',
+  },
+}
 
-//Styles
-const buttonStyle = {
-  margin: 5,
-};
 //Connect to redux store
 @connect((store) => {
   return{
@@ -249,7 +244,7 @@ export default class DashboardPage extends React.Component {
   render() {
     return (
       <div>
-        <Card className='container'>
+        <Card className='container' style={styles.marginTop}>
           <ApplicantPage />
         </Card>
       </div>

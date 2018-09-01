@@ -9,6 +9,13 @@ import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+const styles = {
+  marginTop: {
+    marginTop: '20px',
+  },
+}
+
+
 @connect((store)=>{
   return{
     auth: store.settings.authenticated,
@@ -88,7 +95,7 @@ export default class LoginPage extends React.Component {
    */
   render() {
     return (
-      <div>
+      <div style={styles.marginTop}>
         <LoginForm
           onSubmit={this.processForm}
           onChange={this.changeUser}

@@ -21,6 +21,7 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "fg-loadcss": "^2.0.1",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.0.6",
     "jsonwebtoken": "^8.3.0",
