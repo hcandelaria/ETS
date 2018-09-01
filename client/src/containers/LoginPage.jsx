@@ -58,7 +58,7 @@ export default class LoginPage extends React.Component {
     // Function is expected to return a promise
     Promise.resolve(this.props.dispatch(fetchUser(formData)))
       .then( () =>{
-
+        this.props.dispatch(push('/dashboard'));
       })
       .catch( (err) =>{
         console.log('LoginPage error: ', err);
