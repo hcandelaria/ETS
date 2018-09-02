@@ -36,11 +36,15 @@ const credentials = {
  */
 const updateSigninStatus = (isSignedIn) => {
   if (isSignedIn) {
-    // authorizeButton.style.display = 'none';
-    // signoutButton.style.display = 'block';
+    store.dispatch({
+      type: "UPDATE_GMAIL_SIGNEDIN",
+      payload: true,
+    })
   } else {
-    // authorizeButton.style.display = 'block';
-    // signoutButton.style.display = 'none';
+    store.dispatch({
+      type: "UPDATE_GMAIL_SIGNEDIN",
+      payload: false,
+    })
   }
 }
 /**
@@ -173,6 +177,7 @@ const getNamePosition = (applicant, str) => {
   applicant.lastName = name[1];
   return applicant;
 }
+
 //Connect to redux store
 @connect((store) => {
   return{
@@ -196,6 +201,8 @@ class ApplicantPage extends React.Component{
     this.handleAuthClick = this.handleAuthClick.bind(this);
     this.handleApplicantsArray = this.handleApplicantsArray.bind(this);
     this.handleGetEmails = this.handleGetEmails.bind(this);
+    this.handleSelectAllClick = this.handleSelectAllClick.bind(this);
+    this.handleRowSelectClick = this.handleRowSelectClick.bind(this);
 
   }
   /**
@@ -205,8 +212,35 @@ class ApplicantPage extends React.Component{
     console.log('applicants')
     console.log(applicants)
     console.log('HECTOR LOOK I SHOULD NOT BE CALLED!');
-  }
+  };
+  handleSelectAllClick = event => {
+    if (event.target.checked) {
+      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      return;
+    }
+    this.setState({ selected: [] });
+  };
 
+  handleRowSelectClick = (event, id) => {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
   /**
    * This method will be executed after initial rendering.
    */
@@ -235,10 +269,7 @@ class ApplicantPage extends React.Component{
         // Handle the initial sign-in state.
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         // signoutButton.onclick = handleSignoutClick;
-        store.dispatch({
-          type: "UPDATE_GMAIL_SIGNEDIN",
-          payload: true,
-        })
+
     })
     .catch(function (error) {
       console.log('gmail problems:', error);
@@ -248,10 +279,15 @@ class ApplicantPage extends React.Component{
    *  Sign in the user upon button click.
    */
   handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
+    if(this.props.gmailSignedin){
+      gapi.auth2.getAuthInstance().signOut().then(function () {
+        gapi.auth2.getAuthInstance().disconnect();
+      });
+    }else{
+      gapi.auth2.getAuthInstance().signIn();
+    }
 
-    listMessages();
-
+    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
   }
   /**
    *  Get emails from user
