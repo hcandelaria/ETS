@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import axios from 'axios';
+import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { store } from '../modules/store.js';
 
@@ -140,7 +141,6 @@ const getMessage = (messageId) => {
       }
     });
     // console.log(mimeParts);
-    // handleApplicantsArray(applicant);
     // console.log(applicant);
     store.dispatch(updateApplicant(applicant));
   });
@@ -181,9 +181,10 @@ const getNamePosition = (applicant, str) => {
 //Connect to redux store
 @connect((store) => {
   return{
-
     applicantsArray: store.applicants.applicantsArray,
     gmailSignedin: store.settings.gmailSignedin,
+    rows: store.settings.rows,
+    selectedApplicantsRows: store.applicants.selectedApplicantsRows,
   }
 })
 class ApplicantPage extends React.Component{
@@ -199,47 +200,49 @@ class ApplicantPage extends React.Component{
     this.handleClientLoad = this.handleClientLoad.bind(this);
     this.initClient = this.initClient.bind(this);
     this.handleAuthClick = this.handleAuthClick.bind(this);
-    this.handleApplicantsArray = this.handleApplicantsArray.bind(this);
     this.handleGetEmails = this.handleGetEmails.bind(this);
     this.handleSelectAllClick = this.handleSelectAllClick.bind(this);
     this.handleRowSelectClick = this.handleRowSelectClick.bind(this);
+    this.isSelected = this.isSelected.bind(this);
 
   }
-  /**
-   *  This function will update the applicants array
-   */
-  handleApplicantsArray(applicants) {
-    console.log('applicants')
-    console.log(applicants)
-    console.log('HECTOR LOOK I SHOULD NOT BE CALLED!');
-  };
-  handleSelectAllClick = event => {
-    if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
-      return;
+  isSelected = (id) => this.props.selectedApplicantsRows.indexOf(id) !== -1;
+
+  handleSelectAllClick = (event, id) => {
+
+    let selected = this.props.applicantsArray.map(n => n._id);
+
+    if (this.props.applicantsArray.length === this.props.selectedApplicantsRows.length) {
+      store.dispatch({
+        type: "CLEAR_SELECT_ROWS",
+      })
+    }else{
+      store.dispatch({
+        type: "SELECT_ROWS",
+        payload: selected,
+      })
     }
-    this.setState({ selected: [] });
   };
 
   handleRowSelectClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+    let selectedIndex = this.props.selectedApplicantsRows.indexOf(id)
+    if(selectedIndex === -1){
+      store.dispatch({
+        type: "SELECT_ROW",
+        payload: id,
+      })
+    }else{
+      let newApplicantsRows = [];
+      newApplicantsRows = newApplicantsRows.concat(
+        this.props.selectedApplicantsRows.slice(0, selectedIndex),
+        this.props.selectedApplicantsRows.slice(selectedIndex + 1),
       );
-    }
 
-    this.setState({ selected: newSelected });
+      store.dispatch({
+        type: "REMOVE_ROW",
+        payload: newApplicantsRows,
+      })
+    }
   };
   /**
    * This method will be executed after initial rendering.
@@ -317,7 +320,7 @@ class ApplicantPage extends React.Component{
   render() {
     return (
       <div>
-        <Card className="container">
+        <Paper className="container">
           <Typography variant="display1" id="tableTitle" color="inherit">
             Applicants
           </Typography>
@@ -339,8 +342,16 @@ class ApplicantPage extends React.Component{
               </Button>
             )
           }
-          <ApplicantsTable applicants={this.props.applicantsArray}/>
-        </Card>
+          <ApplicantsTable
+            applicants={this.props.applicantsArray}
+            rows={this.props.rows}
+            selectedApplicantsRows={this.props.selectedApplicantsRows}
+            onSelectAllClick={this.handleSelectAllClick}
+            isSelected={this.isSelected}
+            numSelected={this.props.selectedApplicantsRows.length}
+            rowCount={this.props.applicantsArray.length}
+            rowSelectClick={this.handleRowSelectClick}/>
+        </Paper>
       </div>
     );
 

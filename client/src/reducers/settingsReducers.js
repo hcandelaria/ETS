@@ -4,7 +4,11 @@ import Auth from '../modules/Auth';
 export default function reducer ( state ={
   authenticated: false,
   gmailSignedin: false,
-  row : '',
+  rows : [
+    { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+    { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
+    { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  ],
   secretData: '',
   errors: {},
   successMessage: '',

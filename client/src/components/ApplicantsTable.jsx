@@ -11,7 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import { connect } from 'react-redux';
 
-
 const styles = {
   flex: {
     flexGrow: 1
@@ -22,31 +21,26 @@ const styles = {
     },
   },
 }
-const rows = [
-  { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-  { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-
-];
-const data = [
-  {id: '1', name: 'Hector Candelaria', position:'Sales Associate', email:'hector@test.com'},
-  {id: '2', name: 'gabriel Candelaria', position:'Sales Associate', email:'gabriel@test.com'},
-  {id: '3', name: 'Jennifer Espinal', position:'Sales Associate', email:'jennifer@test.com'},
-  {id: '4', name: 'Jochy Marte', position:'Sales Associate', email:'jochy@test.com'},
-  {id: '5', name: 'Jazmine Rodriguez', position:'Sales Associate', email:'Jazmine@test.com'},
-]
 
 const ApplicantsTable = ({
-  applicants
+  applicants,
+  selectedApplicantsRows,
+  rows,
+  onSelectAllClick,
+  rowSelectClick,
+  isSelected,
+  numSelected,
+  rowCount,
 }) => (
   <Table aria-labelledby="tableTitle">
     <TableHead style={styles.TableHead}>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
-            // indeterminate={numSelected > 0 && numSelected < rowCount}
-            // checked={numSelected === rowCount}
-            // onChange={onSelectAllClick}
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={numSelected === rowCount && numSelected != 0}
+            onClick={onSelectAllClick}
+            color='primary'
           />
         </TableCell>
         {rows.map(row => {
@@ -81,20 +75,24 @@ const ApplicantsTable = ({
         // .sort(getSorting(order, orderBy))
         // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         .map(applicant => {
-          // const isSelected = this.isSelected(n.id);
+
+          let rowId = isSelected(applicant._id);
+
           return (
             <TableRow
               hover
-              // onClick={event => this.handleClick(event, n.id)}
+              onClick={event => rowSelectClick(event, applicant._id)}
               role="checkbox"
-              // aria-checked={isSelected}
+              aria-checked={rowId}
               tabIndex={-1}
-              key={applicant.id}
-              // selected={isSelected}
+              key={applicant._id}
+              selected={rowId}
             >
               <TableCell padding="checkbox">
-                <Checkbox />
-                {/* <Checkbox checked={isSelected} /> */}
+                <Checkbox
+                  checked={rowId}
+                  color='primary'
+                />
               </TableCell>
               <TableCell component="th" scope="row" padding="none">
                 {`${applicant.firstName} ${applicant.lastName}`}
@@ -110,7 +108,14 @@ const ApplicantsTable = ({
 
 
 ApplicantsTable.propTypes = {
-    applicants: PropTypes.array.isRequired
+  applicants: PropTypes.array.isRequired,
+  selectedApplicantsRows: PropTypes.array.isRequired,
+  rows: PropTypes.array.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
+  rowSelectClick: PropTypes.func.isRequired,
+  isSelected: PropTypes.func.isRequired,
+  numSelected: PropTypes.number.isRequired,
+  rowCount: PropTypes.number.isRequired,
 };
 
 export default ApplicantsTable;

@@ -6,6 +6,7 @@ export default function reducer( state = {
   deletingApplicant: false,
   fetched: false,
   applicantsArray: [],
+  selectedApplicantsRows: [],
   errors: {},
 }, action ) {
 
@@ -19,6 +20,31 @@ export default function reducer( state = {
         creatingApplicant: true,
       }
     }
+    case 'SELECT_ROWS' : {
+      return {
+        ...state,
+        selectedApplicantsRows: action.payload,
+      }
+    }
+    case 'SELECT_ROW' : {
+      return {
+        ...state,
+        selectedApplicantsRows: [...state.selectedApplicantsRows, action.payload],
+      }
+    }
+    case 'REMOVE_ROW' : {
+      return {
+        ...state,
+        selectedApplicantsRows: action.payload,
+      }
+    }
+    case 'CLEAR_SELECT_ROWS' : {
+      return {
+        ...state,
+        selectedApplicantsRows: [],
+      }
+    }
+
     default: {
       return state;
     }
