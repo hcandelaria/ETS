@@ -11,6 +11,9 @@ const styles = {
   button:{
     margin: '0px 5px',
   },
+  title:{
+    color: '#FFFFFF'
+  },
 }
 const LoginForm = ({
   onSubmit,
@@ -21,7 +24,7 @@ const LoginForm = ({
 }) => (
   <Card className="container">
     <form  onSubmit={onSubmit} autoComplete="off">
-      <h2 className="card-heading">Login</h2>
+      <h2 className="card-heading" style={styles.title}>Login</h2>
 
       {
         errors.response &&

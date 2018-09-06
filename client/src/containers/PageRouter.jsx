@@ -4,6 +4,7 @@ import LoginPage from './LoginPage.jsx';
 import SignUpPage from './SignUpPage.jsx';
 import LogoutPage from './LogoutPage.jsx';
 import AboutPage from './AboutPage.jsx';
+import SettingsPage from './SettingsPage.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import PageNotfound from './PageNotfound.jsx';
 import { connect } from 'react-redux';
@@ -27,6 +28,7 @@ export default class Navbar extends React.Component{
           <Route exact path="/dashboard" component={DashboardPage}/>
           <Route exact path="/logout" component={LogoutPage}/>
           <Route exact path="/about" component={AboutPage}/>
+          <Route exact path="/settings" component={SettingsPage}/>
           <Route component={PageNotfound}/>
         </Switch>
     )

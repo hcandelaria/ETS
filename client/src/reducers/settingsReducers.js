@@ -13,10 +13,8 @@ export default function reducer ( state ={
   errors: {},
   successMessage: '',
   tableHeight: '50px',
-  openAddItem: false,
-  openSellItem: false,
-  openUpdateItem: false,
-  openDeleteItem: false,
+  menu: true,
+
 }, action ) {
 
   switch(action.type){
@@ -32,32 +30,11 @@ export default function reducer ( state ={
     case 'UPDATE_SECRETDATA' : {
       return {...state, secretData: action.payload}
     }
-    case 'UPDATE_MODAL_ADDITEM' : {
-      if( state.openAddItem === false){
-        return {...state, openAddItem: true}
-      }else {
-        return {...state, openAddItem: false}
-      }
-    }
-    case 'UPDATE_MODAL_SELLITEM' : {
-      if( state.openSellItem === false){
-        return {...state, openSellItem: true}
-      }else {
-        return {...state, openSellItem: false}
-      }
-    }
-    case 'UPDATE_MODAL_UPDATEITEM' : {
-      if( state.openUpdateItem === false){
-        return {...state, openUpdateItem: true}
-      }else {
-        return {...state, openUpdateItem: false}
-      }
-    }
-    case 'UPDATE_MODAL_DELETEITEM' : {
-      if( state.openDeleteItem === false){
-        return {...state, openDeleteItem: true}
-      }else {
-        return {...state, openDeleteItem: false}
+    case 'UPDATE_MENU' : {
+      if(state.menu){
+        return {...state, menu: false}
+      }else{
+        return {...state, menu: true}
       }
     }
     case 'SETTING_ERRORS' : {

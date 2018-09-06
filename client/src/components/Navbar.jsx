@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import Auth from '../modules/Auth';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import Icon from '@material-ui/core/Icon';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import Auth from '../modules/Auth';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux'
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
 
 
 const styles = {
@@ -22,11 +23,14 @@ const styles = {
   },
   flex: {
     flexGrow: 1
-  }
+  },
 }
 
 @connect((store) => {
-  return {auth: store.settings.authenticated}
+  return {
+    auth: store.settings.authenticated,
+    menu: store.settings.menu,
+  }
 })
 export default class Navbar extends React.Component {
   /**
@@ -37,6 +41,7 @@ export default class Navbar extends React.Component {
 
     this.signOut = this.signOut.bind(this);
     this.signIn = this.signIn.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
   /**
    * This method will be executed after initial rendering.
@@ -46,6 +51,11 @@ export default class Navbar extends React.Component {
       ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
       : this.props.dispatch(push('/'));
   }
+  toggleMenu() {
+    this.props.dispatch({
+      type: 'UPDATE_MENU'
+    })
+  };
   signIn() {}
   signOut() {
     this.props.dispatch({type: 'UPDATE_AUTHENTICATED'});
@@ -53,7 +63,7 @@ export default class Navbar extends React.Component {
   }
 
   render() {
-    return (<AppBar position="static">
+    return (<AppBar position="sticky">
       <Toolbar>
 
         <Typography variant="display2" color="inherit" style={styles.flex}>
@@ -63,11 +73,12 @@ export default class Navbar extends React.Component {
           this.props.auth
             ? (<div>
               <div className="top-bar-right">
+
                 <Button variant="contained" style={styles.button} color="secondary" onClick={this.signOut}>
                   SIGN OUT
                 </Button>
-                <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/dashboard">
-                  Dashboard
+                <Button variant="contained" style={styles.button} color="secondary" onClick={this.toggleMenu}>
+                  <Icon>menu</Icon>
                 </Button>
               </div>
             </div>)

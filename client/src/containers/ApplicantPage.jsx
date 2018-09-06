@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import axios from 'axios';
-import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { store } from '../modules/store.js';
 import { Base64 } from 'js-base64';
@@ -225,10 +224,9 @@ class ApplicantPage extends React.Component{
    */
   render() {
     return (
-      <Paper className="container">
-        <Typography variant="display1" id="tableTitle" style={styles.title}>
-          Applicants
-        </Typography>
+      <Card className="container">
+        <h2 className="card-heading" style={styles.title}>Applicants</h2>
+
         {
           this.props.gmailSignedin ?
           (
@@ -275,7 +273,7 @@ class ApplicantPage extends React.Component{
           numSelected={this.props.selectedApplicantsRows.length}
           rowCount={this.props.applicantsArray.length}
           rowSelectClick={this.handleRowSelectClick}/>
-      </Paper>
+      </Card>
     );
 
   }

@@ -6,6 +6,11 @@ import { changeUser, createUser } from '../actions/usersActions'
 
 import SignUpForm from '../components/SignUpForm.jsx';
 
+const styles = {
+  marginTop: {
+    marginTop: '20px',
+  },
+}
 @connect((store)=>{
   return{
     errors: store.users.errors,
@@ -71,7 +76,7 @@ export default class SignUpPage extends React.Component {
    */
   render() {
     return (
-      <div>
+      <div style={styles.marginTop}>
         <SignUpForm
           onSubmit={this.processForm}
           onChange={this.changeUser}

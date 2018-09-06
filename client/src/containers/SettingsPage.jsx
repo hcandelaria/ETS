@@ -1,11 +1,6 @@
-//  Import packages
 import React, { PropTypes } from 'react';
-import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-
-//  Import Component
-import Paper from '@material-ui/core/Paper';
-import ApplicantPage from './ApplicantPage.jsx';
+import Settings from '../components/Settings.jsx';
 
 const styles = {
   marginTop: {
@@ -13,13 +8,16 @@ const styles = {
   },
 }
 
+//  Import Component
+import Paper from '@material-ui/core/Paper';
+
 //Connect to redux store
 @connect((store) => {
   return{
     location: store.router.location.pathname,
   }
 })
-export default class DashboardPage extends React.Component {
+export default class SettingsPage extends React.Component {
 
   /**
    * Class constructor.
@@ -44,7 +42,7 @@ export default class DashboardPage extends React.Component {
   render() {
     return (
       <Paper className='container' style={styles.marginTop}>
-        <ApplicantPage />
+        <Settings />
       </Paper>
     )
   }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Navbar from './components/Navbar.jsx';
+import Menu from './components/Menu.jsx';
 import PageRouter from './containers/PageRouter.jsx';
 
 
@@ -22,6 +23,7 @@ export default class App extends Component {
     return(
       <MuiThemeProvider theme={theme}>
         <div>
+          <Menu />
           <Navbar />
           <PageRouter />
         </div>

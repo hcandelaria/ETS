@@ -6,6 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
+const styles = {
+
+  title:{
+    color: '#FFFFFF'
+  },
+}
 
 const SignUpForm = ({
   onSubmit,
@@ -16,7 +22,7 @@ const SignUpForm = ({
 }) => (
   <Card className="container">
     <form  onSubmit={onSubmit} autoComplete="off">
-      <h2 className="card-heading">Sign Up</h2>
+      <h2 className="card-heading" style={styles.title}>Sign Up</h2>
       {
         message &&
         <p className="success-message center"> {message}</p>
