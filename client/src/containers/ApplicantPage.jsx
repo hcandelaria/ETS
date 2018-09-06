@@ -10,6 +10,7 @@ import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { store } from '../modules/store.js';
+import { Base64 } from 'js-base64';
 
 //  Import Actions
 import { updateApplicant } from '../actions/applicantsActions';
@@ -28,7 +29,7 @@ const credentials = {
   apiKey: process.env.API_KEY,
   clientId: process.env.CLIENT_ID,
   discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"],
-  scope: 'https://www.googleapis.com/auth/gmail.readonly',
+  scope: 'https://mail.google.com/',
 }
 
 /**
@@ -91,6 +92,56 @@ const listMessages = () => {
     }
   });
 }
+
+/**
+ * Send Message.
+ *
+ * @param  {String} userId User's email address. The special value 'me'
+ * can be used to indicate the authenticated user.
+ * @param  {String} email RFC 5322 formatted String.
+ * @param  {Function} callback Function to call when the request is complete.
+ */
+const sendMessage = (headers_obj, message) => {
+  // var base64EncodedEmail = Base64.encodeURI(email);
+  // console.log(base64EncodedEmail)
+  var email = '';
+
+  for(var header in headers_obj)
+    email += header += ": "+headers_obj[header]+"\r\n";
+
+    email += "\r\n" + message;
+  var request = gapi.client.gmail.users.messages.send({
+    userId: 'me',
+    'resource': {
+      'raw': window.btoa(email).replace(/\+/g, '-').replace(/\//g, '_')
+    }
+  });
+  request.execute();
+}
+/*
+  gapi.client.gmail.users.messages.list({
+    userId: 'me',
+    // includeSpamTrash: false,
+    // q: 'indeedemail.com',
+  }).then(function(res, err) {
+    if (err)
+      return console.log('The API returned an error: ' + err);
+
+      let tempId = res.result.messages[0].id;
+      console.log(tempId)
+      gapi.client.gmail.users.messages.get({
+        userId: 'me',
+        id: tempId,
+        format: 'full'
+      }).then((message, err) => {
+        if (err)
+          return console.log('The API returned an error: ' + err);
+
+        console.log(message);
+      });
+  })
+}*/
+
 /**
  * Get Message with given ID.
  * then return an array with all of them.
@@ -108,6 +159,7 @@ const getMessage = (messageId) => {
     position: '',
     location: '0555',
     step: '1',
+    date: '09/05/2018'
   };
 
   gapi.client.gmail.users.messages.get({
@@ -204,6 +256,7 @@ class ApplicantPage extends React.Component{
     this.handleSelectAllClick = this.handleSelectAllClick.bind(this);
     this.handleRowSelectClick = this.handleRowSelectClick.bind(this);
     this.isSelected = this.isSelected.bind(this);
+    this.handleCreateEmail = this.handleCreateEmail.bind(this);
 
   }
   isSelected = (id) => this.props.selectedApplicantsRows.indexOf(id) !== -1;
@@ -212,7 +265,7 @@ class ApplicantPage extends React.Component{
 
     let selected = this.props.applicantsArray.map(n => n._id);
 
-    if (this.props.applicantsArray.length === this.props.selectedApplicantsRows.length) {
+    if (this.props.selectedApplicantsRows.length > 0) {
       store.dispatch({
         type: "CLEAR_SELECT_ROWS",
       })
@@ -292,6 +345,21 @@ class ApplicantPage extends React.Component{
 
     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
   }
+
+  /**
+   *  Send email to selected applicant
+   */
+  handleCreateEmail(event) {
+    console.log('testing handleCreateEmail');
+    let headers = {
+      To: '<bridgewaterexpress@gmail.com>',
+      Subject: 'Testing Something'
+    };
+
+    let message = 'I love you princess!'
+
+    sendMessage(headers, message);
+  };
   /**
    *  Get emails from user
    */
@@ -328,11 +396,30 @@ class ApplicantPage extends React.Component{
             this.props.gmailSignedin ?
             (
               <div>
-                <Button variant="contained" style={styles.button} onClick={this.handleGetEmails} color="primary" >
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  onClick={this.handleGetEmails}
+                  color="primary" >
                   <Icon>cloud_download</Icon>
                 </Button>
-                <Button variant="contained" style={styles.button} id="signout_button" onClick={this.handleAuthClick} color="primary" >
-                  <Icon>highlight_off</Icon>
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  id="send_email"
+                  onClick={this.handleCreateEmail}
+                  color="primary"
+                  // disabled={(this.props.selectedApplicantsRows.length == 0)}
+                  >
+                  <Icon>email</Icon>
+                </Button>
+                <Button
+                  variant="contained"
+                  style={styles.button}
+                  id="signout_button"
+                  onClick={this.handleAuthClick}
+                  color="primary" >
+                  <Icon>exit_to_app</Icon>
                 </Button>
               </div>
             ):(
