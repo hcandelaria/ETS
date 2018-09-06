@@ -353,10 +353,10 @@ class ApplicantPage extends React.Component{
     console.log('testing handleCreateEmail');
     let headers = {
       To: '<bridgewaterexpress@gmail.com>',
-      Subject: 'Testing Something'
+      Subject: 'Testing gmail'
     };
 
-    let message = 'I love you princess!'
+    let message = 'HELLO WORLD!'
 
     sendMessage(headers, message);
   };
