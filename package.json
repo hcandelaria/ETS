@@ -9,10 +9,9 @@
     "bundle": "webpack"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/rwa4791/Finalproject"
+    "type": "git"
   },
-  "author": "Hector Candelaria, Robert Angus, Christian Vasquez",
+  "author": "Hector Candelaria",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^3.0.1",

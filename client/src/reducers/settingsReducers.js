@@ -13,8 +13,8 @@ export default function reducer ( state ={
   errors: {},
   successMessage: '',
   tableHeight: '50px',
-  menu: true,
-
+  menu: false,
+  
 }, action ) {
 
   switch(action.type){
