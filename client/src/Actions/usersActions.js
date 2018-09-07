@@ -8,7 +8,7 @@ export function fetchUser(formData){
 
   return function(dispatch) {
     //Start fetch
-    dispatch({type: 'FETCH_USER_START'});
+    dispatch({type: 'LOGIN_USER_START'});
     //Post request for login user
     axios.post(`/auth/login`, formData)
       .then((res) => {
@@ -19,13 +19,32 @@ export function fetchUser(formData){
         localStorage.setItem('_id', res.data.user.id);
 
         //Get user data
-        dispatch({type: 'FETCH_USER_FULFILLED', payload: res.data.user, response: res.data.message, status: 'success'});
+        dispatch({type: 'LOGIN_USER_FULFILLED', payload: res.data.user, response: res.data.message, status: 'success'});
 
       })
       //Catch error
       .catch((err) =>{
         console.log('test:', err)
-        dispatch({type: 'CREATE_USER_ERROR', payload: err });
+        dispatch({type: 'LOGIN_USER_ERROR', payload: err });
+      })
+  }
+}
+export function fetchUserById(id){
+  return function(dispatch) {
+    //Start fetch
+    dispatch({type: 'FETCH_USER_START'});
+    //Post request for login user
+    axios.get(`/auth/user/${id}` )
+      .then((res) => {
+        //Get user data
+        console.log(res.data)
+        dispatch({type: 'FETCH_USER_FULFILLED', payload: res.data, response: res.data.message, status: 'success'});
+
+      })
+      //Catch error
+      .catch((err) =>{
+        console.log('fetchUserById:', err)
+        dispatch({type: 'USER_ERROR', payload: err });
       })
   }
 }

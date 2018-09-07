@@ -3,6 +3,7 @@ const validator = require('validator');
 const passport = require('passport');
 
 const router = new express.Router();
+const usersController = require("../controllers/usersController");
 
 /**
  * Validate the sign up form
@@ -147,6 +148,10 @@ router.post('/login', (req, res, next) => {
       user: userData
     });
   })(req, res, next);
+});
+router.get('/user/:id', (req,res) => {
+  usersController.findById(req, res);
+
 });
 
 
