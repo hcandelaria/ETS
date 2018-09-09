@@ -19,7 +19,9 @@ import { connect } from 'react-redux';
   }
 })
 export default class Navbar extends React.Component{
+  componentDidMount(){
 
+  }
   render(){
     return(
         <Switch>

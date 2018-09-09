@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Settings from '../components/Settings.jsx';
-import { fetchUserById } from '../actions/usersActions.js';
 import { store } from '../modules/store.js';
+import { fetchUserById, changeUser } from '../actions/usersActions.js';
 
 const styles = {
   marginTop: {
@@ -32,6 +32,7 @@ export default class SettingsPage extends React.Component {
     super(props, context);
 
     this.handleSwitch = this.handleSwitch.bind(this);
+    this.changeUser = this.changeUser.bind(this);
   }
 
   /**
@@ -39,9 +40,17 @@ export default class SettingsPage extends React.Component {
    */
   componentDidMount() {
     let _id = localStorage.getItem('_id');
-    store.dispatch(fetchUserById(_id));
+    this.props.dispatch(fetchUserById(_id));
   };
-
+  /**
+   * Change the user object.
+   *
+   * @param {object} event - the JavaScript event object
+   */
+  changeUser(event) {
+    event.preventDefault();
+    this.props.dispatch(changeUser(event, this.props.user))
+  }
   handleSwitch(){
     this.props.dispatch({
       type: 'UPDATE_GROUPINTERVEWS'
@@ -59,6 +68,7 @@ export default class SettingsPage extends React.Component {
           timesAvailable={this.props.timesAvailable}
           handleSwitch={this.handleSwitch}
           user={this.props.user}
+          onChange={this.changeUser}
         />
       </Paper>
     )

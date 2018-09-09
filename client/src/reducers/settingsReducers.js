@@ -4,11 +4,6 @@ import Auth from '../modules/Auth';
 export default function reducer ( state ={
   authenticated: false,
   gmailSignedin: false,
-  rows : [
-    { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
-    { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
-    { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-  ],
   secretData: '',
   errors: {},
   successMessage: '',
@@ -16,6 +11,11 @@ export default function reducer ( state ={
   menu: false,
   groupInterviews: false,
   weekendsInterviews: false,
+  rows : [
+    { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
+    { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
+    { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  ],
   timesAvailable: [
     {id: 0, day: 'Sunday', available: false, from: '14:00', to: '17:30', step: 900},
     {id: 1, day: 'Monday', available: true, from: '14:00', to: '17:30', step: 900},

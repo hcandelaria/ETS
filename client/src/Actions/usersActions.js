@@ -37,7 +37,6 @@ export function fetchUserById(id){
     axios.get(`/auth/user/${id}` )
       .then((res) => {
         //Get user data
-        console.log(res.data)
         dispatch({type: 'FETCH_USER_FULFILLED', payload: res.data, response: res.data.message, status: 'success'});
 
       })

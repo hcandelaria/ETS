@@ -7,7 +7,9 @@ import {
   FormControlLabel,
   TextField,
   FormLabel,
-  Typography
+  Typography,
+  Divider,
+  FormControl,
 } from '@material-ui/core/';
 
 const styles = {
@@ -25,12 +27,21 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  textField:{
+    marginRight: 10,
+  },
+  fullWidth:{
+    width: '48%',
+    marginRight: '15px',
+    marginLeft: '15px',
+  },
 }
 const Settings = ({
   groupInterviews,
   weekendsInterviews,
   timesAvailable,
   handleSwitch,
+  onChange,
   user,
 }) => (<Card className="container">
   <h2 className="card-heading" style={styles.title}>Settings</h2>
@@ -96,17 +107,97 @@ const Settings = ({
     }
   </FormGroup>
   <br/>
+  <Divider/>
   <Typography variant="title" gutterBottom>
-    Account
+    Store Information
   </Typography>
-  <div style={styles.container}>
-    <TextField
-      label="Store"
-      id="margin-none"
-      defaultValue={user.store}
-      // helperText="Some important text"
-    />
-  </div>
+  {
+  Object.keys(user).length > 0
+    ? (
+    <form autoComplete="off">
+      <div className="container">
+        <TextField
+          style={styles.textField}
+          name="store"
+          label="Store"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.store}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+        <TextField
+          style={styles.textField}
+          name="email"
+          label="Email"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.email}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+        <TextField
+          style={styles.textField}
+          name="phone"
+          label="Phone"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.phone}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+      </div>
+      <div className="container">
+        <TextField
+          style={styles.fullWidth}
+          name="address"
+          label="Street Adress"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.address}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+        <FormControl>
+          <TextField
+            style={styles.textField}
+            name="state"
+            label="State"
+            id="margin-none"
+            margin="dense"
+            defaultValue={user.address}
+            onChange={onChange}
+          // helperText="Some important text"
+          />
+        </FormControl>
+      </div>
+      <div>
+        <TextField
+          style={styles.textField}
+          name="city"
+          label="City"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.city}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+        <TextField
+          style={styles.textField}
+          name="zipCode"
+          label="Zip code"
+          id="margin-none"
+          margin="dense"
+          defaultValue={user.zipCode}
+          onChange={onChange}
+        // helperText="Some important text"
+        />
+      </div>
+    </form>
+    ): (
+      <div></div>
+    )
+  }
 </Card>);
 
 Settings.propTypes = {
@@ -114,6 +205,7 @@ Settings.propTypes = {
   weekendsInterviews: PropTypes.bool.isRequired,
   timesAvailable: PropTypes.array.isRequired,
   handleSwitch: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };
 export default Settings;
