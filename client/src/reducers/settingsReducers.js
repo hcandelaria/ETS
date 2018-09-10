@@ -17,13 +17,13 @@ export default function reducer ( state ={
     { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   ],
   timesAvailable: [
-    {id: 0, day: 'Sunday', available: false, from: '14:00', to: '17:30', step: 900},
+    // {id: 0, day: 'Sunday', available: false, from: '14:00', to: '17:30', step: 900},
     {id: 1, day: 'Monday', available: true, from: '14:00', to: '17:30', step: 900},
     {id: 2, day: 'Tuesday', available: true, from: '14:00', to: '17:30', step: 900},
     {id: 3, day: 'Wednesday', available: true, from: '14:00', to: '17:30', step: 900},
     {id: 4, day: 'Thursday', available: true, from: '14:00', to: '17:30', step: 900},
     {id: 5, day: 'Friday', available: true, from: '14:00', to: '17:30', step: 900},
-    {id: 6, day: 'Saturday', available: false, from: '14:00', to: '17:30', step: 900},
+    // {id: 6, day: 'Saturday', available: false, from: '14:00', to: '17:30', step: 900},
   ]
 }, action ) {
 
