@@ -85,6 +85,28 @@ export default function reducer ( state ={
         fetched: true
      }
     }
+    case 'UPDATE_USER_START' :{
+      return{
+        ...state,
+        fetching: true,
+      }
+    }
+    case 'UPDATE_USER_ERROR' : {
+      return {
+        ...state,
+        errors: action.payload,
+        fetching: false
+      }
+    }
+    case 'UPDATE_USER_FULFILLED' : {
+      return {
+        ...state,
+        user: action.payload,
+        message: action.response,
+        fetching: false,
+        fetched: true
+     }
+    }
     default: {
       return state;
     }

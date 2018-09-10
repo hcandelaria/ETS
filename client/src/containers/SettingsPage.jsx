@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Settings from '../components/Settings.jsx';
 import { store } from '../modules/store.js';
-import { fetchUserById, changeUser } from '../actions/usersActions.js';
+import { fetchUserById, changeUser, updateUser } from '../actions/usersActions.js';
 
 const styles = {
   marginTop: {
@@ -33,8 +33,32 @@ export default class SettingsPage extends React.Component {
 
     this.handleSwitch = this.handleSwitch.bind(this);
     this.changeUser = this.changeUser.bind(this);
+    this.processForm = this.processForm.bind(this);
   }
+  /**
+   * Process the form.
+   *
+   * @param {object} event - the JavaScript event object
+   */
+  processForm(event) {
+    // prevent default action. in this case, action is the form submission event
+    event.preventDefault();
+    // formData to send
+    const name = encodeURIComponent(this.props.user.name);
+    const store = encodeURIComponent(this.props.user.store);
+    const email = encodeURIComponent(this.props.user.email);
+    const phone = encodeURIComponent(this.props.user.phone);
+    const address = encodeURIComponent(this.props.user.address);
+    const state = encodeURIComponent(this.props.user.state);
+    const city = encodeURIComponent(this.props.user.city);
+    const zipCode = encodeURIComponent(this.props.user.zipCode);
+    let formData =`name=${name}&store=${store}&email=${email}`;
+    formData = formData + `&phone=${phone}&address=${address}`;
+    formData = formData + `&state=${state}&city=${city}&zipCode=${zipCode}`;
 
+    let id = localStorage.getItem('_id');
+    this.props.dispatch(updateUser(id, formData));
+  }
   /**
    * This method will be executed after initial rendering.
    */
@@ -69,6 +93,7 @@ export default class SettingsPage extends React.Component {
           handleSwitch={this.handleSwitch}
           user={this.props.user}
           onChange={this.changeUser}
+          onSubmit={this.processForm}
         />
       </Paper>
     )

@@ -70,6 +70,7 @@ const Settings = ({
   handleSwitch,
   onChange,
   user,
+  onSubmit
 }) => (<Card className="container">
   <h2 className="card-heading" style={styles.title}>Settings</h2>
     {/* interviews ExpansionPanel*/}
@@ -194,7 +195,7 @@ const Settings = ({
                 label="Name"
                 id="margin-none"
                 margin="dense"
-                defaultValue={user.Name}
+                defaultValue={user.name}
                 onChange={onChange}
               // helperText="Some important text"
               />
@@ -235,7 +236,7 @@ const Settings = ({
               <TextField
                 style={styles.AddressStyle}
                 name="address"
-                label="Street Adress"
+                label="Street Address"
                 id="margin-none"
                 margin="dense"
                 defaultValue={user.address}
@@ -289,7 +290,7 @@ const Settings = ({
             <Icon>close</Icon>Cancel
           </Button>
 
-          <Button variant="extendedFab" style={styles.saveIcon} aria-label="Save">
+          <Button onClick={onSubmit} variant="extendedFab" style={styles.saveIcon} aria-label="Save">
             <Icon>check</Icon>Save
           </Button>
         </Typography>
@@ -303,6 +304,7 @@ Settings.propTypes = {
   weekendsInterviews: PropTypes.bool.isRequired,
   timesAvailable: PropTypes.array.isRequired,
   handleSwitch: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };

@@ -69,3 +69,18 @@ export function createUser(formData){
       })
   }
 }
+export function updateUser(id,formData){
+  return function(dispatch){
+    //Start fetch
+    dispatch({type: 'UPDATE_USER_START'})
+    //Post request for login user
+    axios.put(`/auth/user/${id}/`, formData)
+      .then((res) => {
+        dispatch({type: 'UPDATE_USER_FULFILLED', payload: res.data, response: res.data.message, status: 'success'});
+      })
+      //Catch error
+      .catch((err) =>{
+        dispatch({type: 'UPDATE_USER_ERROR', payload: err });
+      })
+  }
+}
