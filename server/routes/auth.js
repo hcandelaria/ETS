@@ -152,6 +152,9 @@ router.post('/login', (req, res, next) => {
 router.put('/user/:id', (req,res) => {
   usersController.update(req, res);
 });
+router.put('/user/schedule/:id', (req,res) => {
+  usersController.updateSchedule(req, res);
+});
 router.get('/user/:id', (req,res) => {
   usersController.findById(req, res);
 });

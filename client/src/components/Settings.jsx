@@ -70,7 +70,8 @@ const Settings = ({
   handleSwitch,
   onChange,
   user,
-  onSubmit
+  onSubmit,
+  scheduleSubmit,
 }) => (<Card className="container">
   <h2 className="card-heading" style={styles.title}>Settings</h2>
     {/* interviews ExpansionPanel*/}
@@ -168,7 +169,7 @@ const Settings = ({
           <Icon>close</Icon>Cancel
         </Button>
 
-        <Button variant="extendedFab" style={styles.saveIcon} aria-label="Save">
+        <Button onClick={scheduleSubmit} variant="extendedFab" style={styles.saveIcon} aria-label="Save">
           <Icon>check</Icon>Save
         </Button>
       </Typography>
@@ -305,6 +306,7 @@ Settings.propTypes = {
   timesAvailable: PropTypes.array.isRequired,
   handleSwitch: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  scheduleSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
 };

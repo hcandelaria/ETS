@@ -20,7 +20,6 @@ import { connect } from 'react-redux';
 })
 export default class Navbar extends React.Component{
   componentDidMount(){
-
   }
   render(){
     return(
@@ -31,6 +30,7 @@ export default class Navbar extends React.Component{
           <Route exact path="/logout" component={LogoutPage}/>
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/settings" component={SettingsPage}/>
+          <Route exact path="/api/store" component={PageNotfound}/>
           <Route component={PageNotfound}/>
         </Switch>
     )

@@ -3,7 +3,6 @@ const router = new express.Router();
 const applicantsController = require("../controllers/applicantsController");
 
 
-
 router.post('/item', (req, res) => {
   console.log(req.body);
   applicantsController.create(req,res)

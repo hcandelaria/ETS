@@ -69,7 +69,7 @@ export function createUser(formData){
       })
   }
 }
-export function updateUser(id,formData){
+export function updateUser(id, formData){
   return function(dispatch){
     //Start fetch
     dispatch({type: 'UPDATE_USER_START'})
@@ -82,5 +82,17 @@ export function updateUser(id,formData){
       .catch((err) =>{
         dispatch({type: 'UPDATE_USER_ERROR', payload: err });
       })
+  }
+}
+export function updateTimesAvailable(id, schedule){
+
+  console.log(schedule);
+
+  return function(dispatch){
+    axios.put(`/auth/user/schedule/${id}`, schedule).then((res)=>{
+      console.log(res.data);
+    }).catch((err) =>{
+      console.log(err);
+    })
   }
 }

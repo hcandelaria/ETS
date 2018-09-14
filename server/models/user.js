@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
+var availabilitySchema = new Schema({
+  // id: String,
+  day: String,
+  available: { type: Boolean, default: true},
+  from: String,
+  to: String,
+  step: { type: Number, default: 900},
+  // startDate: {}
+});
+
 // define the User model schema
 const UserSchema = new mongoose.Schema({
   email: {  type: String, index: { unique: true } },
@@ -13,6 +23,8 @@ const UserSchema = new mongoose.Schema({
   city: String,
   state: String,
   zipCode: String,
+  timesAvailable: [],
+  // timesAvailable: { type: [availabilitySchema] },
 });
 
 
