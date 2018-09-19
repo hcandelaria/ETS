@@ -17,6 +17,13 @@ export default function reducer ( state ={
     case 'USER_ERROR' : {
       return {...state, errors: action.payload }
     }
+    case 'LOGIN_USER_START' :{
+      return{
+        ...state,
+        fetching: true,
+        errors: {},
+      }
+    }
     case 'FETCH_USER_START' :{
       return{
         ...state,
@@ -24,13 +31,30 @@ export default function reducer ( state ={
         errors: {},
       }
     }
-    case 'FETCH_USER_ERROR' : {
+    case 'USER_ERROR' : {
       return {
         ...state,
         fetching: false
       }
     }
     case 'FETCH_USER_FULFILLED' : {
+      return {
+        ...state,
+        user: action.payload,
+        fetching: false,
+        fetched: true
+     }
+    }
+    case 'LOGIN_USER_FULFILLED' : {
+      return {
+        ...state,
+        user: {},
+        _id: action.payload.id,
+        fetching: false,
+        fetched: true
+     }
+    }
+    case 'LOGIN_USER_FULFILLED' : {
       return {
         ...state,
         user: {},
@@ -53,6 +77,28 @@ export default function reducer ( state ={
       }
     }
     case 'CREATE_USER_FULFILLED' : {
+      return {
+        ...state,
+        user: action.payload,
+        message: action.response,
+        fetching: false,
+        fetched: true
+     }
+    }
+    case 'UPDATE_USER_START' :{
+      return{
+        ...state,
+        fetching: true,
+      }
+    }
+    case 'UPDATE_USER_ERROR' : {
+      return {
+        ...state,
+        errors: action.payload,
+        fetching: false
+      }
+    }
+    case 'UPDATE_USER_FULFILLED' : {
       return {
         ...state,
         user: action.payload,

@@ -1,12 +1,17 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 
-const img404 = './img/Bat-Signal-404.png'
-
 const PageNotfound = () => (
   <div className="container">
     <br />
-    <img src={img404} className='responsive-img' />
+    <h1>
+      <b>
+        OOPS, OUR BAD.
+      </b>
+    </h1>
+    <p>
+      We're sorry. An error has occurred when attempting to process your request. Please go back and try your request again, or return at a later time.
+    </p>
   </div>
 );
 

@@ -28,6 +28,7 @@ const styles = {
 
 @connect((store) => {
   return {
+    location: store.router.location.pathname.split('/'),
     auth: store.settings.authenticated,
     menu: store.settings.menu,
   }
@@ -49,7 +50,7 @@ export default class Navbar extends React.Component {
   componentDidMount() {
     Auth.isUserAuthenticated()
       ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
-      : this.props.dispatch(push('/'));
+      : console.log('Welcome Guess!');
   }
   toggleMenu() {
     this.props.dispatch({
@@ -82,18 +83,25 @@ export default class Navbar extends React.Component {
                 </Button>
               </div>
             </div>)
-            : (<div className="top-bar-right">
-              <div>
-                <div className="top-bar-right">
-                  <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/">
-                    LOGIN
-                  </Button>
-                  <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/signup">
-                    SIGN UP
-                  </Button>
-                </div>
-              </div>
-            </div>)
+            : (
+              (this.props.location[1] != 'store')
+                ? (
+                  <div className="top-bar-right">
+                    <div>
+                      <div className="top-bar-right">
+                        <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/">
+                          LOGIN
+                        </Button>
+                        <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/signup">
+                          SIGN UP
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div></div>
+                )
+            )
         }
       </Toolbar>
 

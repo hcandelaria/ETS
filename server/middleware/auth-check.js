@@ -7,10 +7,18 @@ const config = require('../../config');
  *  The Auth Checker middleware function.
  */
 module.exports = (req, res, next) => {
-  if (!req.headers.authorization) {
+  const path = req.path.split('/');
+
+  if (!req.headers.authorization && path[1] != 'store') {
     return res.status(401).end();
   }
 
+  if(path[1] == 'store'){
+    return User.find({store: path[2]}, function(req, res){
+
+      return next();
+    })
+  }
   // get the last part from a authorization header string like "bearer token-value"
   const token = req.headers.authorization.split(' ')[1];
 

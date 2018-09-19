@@ -7,6 +7,7 @@ import AboutPage from './AboutPage.jsx';
 import SettingsPage from './SettingsPage.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import PageNotfound from './PageNotfound.jsx';
+import InterviewsPage from './InterviewsPage.jsx';
 import { connect } from 'react-redux';
 
 @connect((store)=>{
@@ -19,7 +20,8 @@ import { connect } from 'react-redux';
   }
 })
 export default class Navbar extends React.Component{
-
+  componentDidMount(){
+  }
   render(){
     return(
         <Switch>
@@ -29,6 +31,7 @@ export default class Navbar extends React.Component{
           <Route exact path="/logout" component={LogoutPage}/>
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/settings" component={SettingsPage}/>
+          <Route exact path="/store/:id" component={InterviewsPage}/>
           <Route component={PageNotfound}/>
         </Switch>
     )

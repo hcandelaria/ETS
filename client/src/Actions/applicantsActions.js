@@ -13,6 +13,13 @@ export function updateApplicant (applicant) {
     })
   }
 }
+export function changeApplicant(event, applicant){
+  return function(dispatch) {
+    const field = event.target.name;
+    applicant[field] = event.target.value;
+    dispatch({type: 'UPDATE_USER', payload: applicant});
+  }
+}
 //  Export functions
 export function fetchItems(id){
   return function(dispatch) {
@@ -39,29 +46,16 @@ export function fetchItems(id){
       })
   }
 }
-export function createItem( itemData ){
+export function createInterview( store, interview ){
   return function( dispatch ) {
-    dispatch({type: 'UPDATE_ITEM_START'})
+    dispatch({type: 'UPDATE_INTERVIEW_START'})
 
-    console.log(itemData)
-
-    let authReq = {
-      method: 'POST',
-      url: '/api/item',
-      headers: {
-        'Authorization': `bearer ${Auth.getToken()}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      json: true,
-      data: itemData
-    };
-
-    axios(authReq)
+    axios.post(`/api/store/${store}/applicant`, interview)
       .then( (res) => {
-        dispatch({type: 'CREATING_ITEM_FULFILLED', payload: res.data})
+        dispatch({type: 'CREATING_INTERVIEW_FULFILLED'});
       })
       .catch((err) => {
-        dispatch({type: 'CREATING_ITEM_ERROR', payload: err})
+        dispatch({type: 'CREATING_INTERVIEW_ERROR', payload: err})
       })
   }
 }

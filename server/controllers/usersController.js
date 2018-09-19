@@ -8,10 +8,15 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findByStore: function(req, res) {
+    db.User
+      .findOne({store: req.params.store})
+      .then(dbModel => res.json(dbModel.timesAvailable))
+      .catch(err => res.status(422).json(err));
+  },
   findById: function(req, res) {
     db.User
       .findById(req.params.id)
-      .populate("Items")
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -27,6 +32,15 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  updateSchedule: function(req,res){
+    db.User
+      .findOneAndUpdate({ _id: req.params.id},
+        {$push: {timesAvailable: req.body }}
+      )
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
   remove: function(req, res) {
     db.User
       .findById({ _id: req.params.id })

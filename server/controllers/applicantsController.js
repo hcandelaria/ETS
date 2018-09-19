@@ -33,7 +33,6 @@ module.exports = {
     db.Applicant
       .create(req.body)
       .then(dbApplicant => {
-        userUpdateNewApplicant(dbApplicant ,req.body.user_id)
         res.json(dbApplicant)
       })
       .catch(err => res.status(422).json(err));
