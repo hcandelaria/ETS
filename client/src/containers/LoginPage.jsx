@@ -56,14 +56,14 @@ export default class LoginPage extends React.Component {
     // prevent default action. in this case, action is the form submission event
     event.preventDefault();
     // formData to send
-    const email = encodeURIComponent(this.props.user.email);
-    const password = encodeURIComponent(this.props.user.password);
-    const formData = `email=${email}&password=${password}`;
+    const EMAIL = encodeURIComponent(this.props.user.email);
+    const PASSWORD = encodeURIComponent(this.props.user.password);
+    const FORMDATA = `email=${EMAIL}&password=${PASSWORD}`;
 
 
 
     // Function is expected to return a promise
-    Promise.resolve(this.props.dispatch(fetchUser(formData)))
+    Promise.resolve(this.props.dispatch(fetchUser(FORMDATA)))
       .then( () =>{
         this.props.dispatch(push('/dashboard'));
       })

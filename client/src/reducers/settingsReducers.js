@@ -11,9 +11,6 @@ export default function reducer ( state ={
   menu: false,
   groupInterviews: false,
   weekendsInterviews: false,
-  activeStep: 0,
-  skipped: new Set(),
-  steps: ['User info', 'Choose a date', 'Confirm interview'],
   rows : [
     { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
     { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
@@ -37,12 +34,7 @@ export default function reducer ( state ={
     case 'UPDATE_ROW' : {
       return {...state, row: action.payload}
     }
-    case 'UPDATE_ACTIVESTEP' : {
-      return {...state, activeStep: action.payload}
-    }
-    case 'UPDATE_SKIPPED' : {
-      return {...state, skipped: action.payload}
-    }
+
     case 'UPDATE_TABLEHEIGHT': {
       return {...state, tableHeight: action.payload}
     }

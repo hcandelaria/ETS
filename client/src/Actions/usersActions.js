@@ -36,7 +36,7 @@ export function fetchUserByStore(store){
     axios.get(`/api/store/${store}`)
       .then((res) => {
         console.log(res);
-        dispatch({type: 'FETCH_USER_SCHEDULE_FULFILLED', payload: res.data.timesAvailable, response: res.data.message, status: 'success'});
+        dispatch({type: 'FETCH_USER_SCHEDULE_FULFILLED', payload: res.data, response: res.data.message, status: 'success'});
       })
       .catch((err) => {
         console.log('fetchUserById:', err)

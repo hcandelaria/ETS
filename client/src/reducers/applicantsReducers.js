@@ -4,8 +4,14 @@ export default function reducer( state = {
   creatingApplicant: false,
   updatingApplicant: false,
   deletingApplicant: false,
+  creatingInterview: false,
+  interviewCreated: false,
   fetched: false,
+  activeStep: 0,
+  skipped: new Set(),
+  steps: ['User info', 'Choose a date', 'Confirm interview'],
   applicantsArray: [],
+  schedule: [],
   applicant: {},
   interviewTime: '',
   selectedApplicantsRows: [],
@@ -22,34 +28,35 @@ export default function reducer( state = {
         creatingApplicant: true,
       }
     }
-    case 'SELECT_ROWS' : {
+    case 'UPDATE_INTERVIEW_START' : {
       return {
         ...state,
-        selectedApplicantsRows: action.payload,
+        creatingInterview: true,
       }
+    }
+    case 'CREATING_INTERVIEW_FULFILLED' : {
+      return {
+        ...state,
+        creatingInterview: false,
+        interviewCreated: true,
+      }
+    }
+    case 'FETCH_USER_SCHEDULE_FULFILLED' : {
+      return {
+        ...state,
+        schedule: action.payload,
+      }
+    }
+    case 'UPDATE_ACTIVESTEP' : {
+      return {...state, activeStep: action.payload}
+    }
+    case 'UPDATE_SKIPPED' : {
+      return {...state, skipped: action.payload}
     }
     case 'UPDATE_INTERVIEWTIME' : {
       return {
         ...state,
         interviewTime: action.payload,
-      }
-    }
-    case 'SELECT_ROW' : {
-      return {
-        ...state,
-        selectedApplicantsRows: [...state.selectedApplicantsRows, action.payload],
-      }
-    }
-    case 'REMOVE_ROW' : {
-      return {
-        ...state,
-        selectedApplicantsRows: action.payload,
-      }
-    }
-    case 'CLEAR_SELECT_ROWS' : {
-      return {
-        ...state,
-        selectedApplicantsRows: [],
       }
     }
 

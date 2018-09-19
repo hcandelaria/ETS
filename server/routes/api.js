@@ -6,7 +6,7 @@ const usersController = require("../controllers/usersController");
 router.get('/store/:store', (req, res) => {
   usersController.findByStore(req,res);
 });
-router.post('/item', (req, res) => {
+router.post('/store/:id/applicant', (req, res) => {
   console.log(req.body);
   applicantsController.create(req,res)
 });

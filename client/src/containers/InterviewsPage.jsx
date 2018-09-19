@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Interviews from '../components/Interviews.jsx';
 import { fetchUserByStore } from '../actions/usersActions';
-import { changeApplicant } from '../actions/applicantsActions';
+import { changeApplicant, createInterview } from '../actions/applicantsActions';
 import {
   Card,
   Stepper,
@@ -30,10 +30,10 @@ const STYLES = {
 @connect((store) => {
   return{
     location: store.router.location.pathname.split('/'),
-    schedule: store.users.schedule,
-    activeStep: store.settings.activeStep,
-    steps: store.settings.steps,
-    skipped: store.settings.skipped,
+    schedule: store.applicants.schedule,
+    activeStep: store.applicants.activeStep,
+    steps: store.applicants.steps,
+    skipped: store.applicants.skipped,
     applicant: store.applicants.applicant,
     interviewTime: store.applicants.interviewTime,
   }
@@ -60,14 +60,22 @@ class InterviewsPage extends React.Component{
    * This method will be executed after initial rendering.
    */
   componentDidMount() {
-
     const STORE = this.props.location[2];
-
     this.props.dispatch(fetchUserByStore(STORE));
   };
   handleNext = () => {
     if(this.props.activeStep === this.props.steps.length - 1){
-      console.log('creating interview')
+
+      const STORE = this.props.location[2];
+      const FNAME = this.props.applicant.fName;
+      const LNAME = this.props.applicant.lName;
+      const EMAIL = this.props.applicant.email;
+      const PHONE = this.props.applicant.phone;
+      const INTERVIEWTIME = this.props.interviewTime;
+      const FORMDATA = `store=${STORE}&fName=${FNAME}&lName=${LNAME}&email=${EMAIL}&phone=${PHONE}&interviewTime=${INTERVIEWTIME}`;
+
+      this.props.dispatch(createInterview(STORE, FORMDATA));
+
     }else{
       const activeStep = this.props.activeStep;
       let skipped = this.props.skipped;
