@@ -50,7 +50,7 @@ export default class Navbar extends React.Component {
   componentDidMount() {
     Auth.isUserAuthenticated()
       ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
-      : console.log('');
+      : console.log('Welcome Guess!');
   }
   toggleMenu() {
     this.props.dispatch({

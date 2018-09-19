@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 
-const styles = {
+import {
+  Button,
+  TextField,
+  Card,
+  CardContent,
+} from '@material-ui/core/';
+
+const STYLES = {
   button:{
     margin: '0px 5px',
   },
@@ -24,7 +27,7 @@ const LoginForm = ({
 }) => (
   <Card className="container">
     <form  onSubmit={onSubmit} autoComplete="off">
-      <h2 className="card-heading" style={styles.title}>Login</h2>
+      <h2 className="card-heading" style={STYLES.title}>Login</h2>
 
       {
         errors.response &&
@@ -50,10 +53,10 @@ const LoginForm = ({
       </div>
 
       <div className="button-line">
-        <Button type="submit" onSubmit={onSubmit} style={styles.button} variant="contained" color="primary">
+        <Button type="submit" onSubmit={onSubmit} style={STYLES.button} variant="contained" color="primary">
           Log in
         </Button>
-        <Button type="submit" disabled style={styles.button} variant="contained" color="primary">
+        <Button type="submit" disabled style={STYLES.button} variant="contained" color="primary">
           Gmail
         </Button>
       </div>

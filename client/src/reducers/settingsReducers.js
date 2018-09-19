@@ -11,6 +11,9 @@ export default function reducer ( state ={
   menu: false,
   groupInterviews: false,
   weekendsInterviews: false,
+  activeStep: 0,
+  skipped: new Set(),
+  steps: ['User info', 'Choose a date', 'Confirm interview'],
   rows : [
     { id: 'name', numeric: false, disablePadding: false, label: 'Name' },
     { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
@@ -18,11 +21,11 @@ export default function reducer ( state ={
   ],
   timesAvailable: [
     // {id: 0, day: 'Sunday', available: false, from: '14:00', to: '17:30', step: 900},
-    {id: 1, day: 'Monday', available: true, from: '14:00', to: '17:30', step: 900, startDate: '9/12/2018'},
-    {id: 2, day: 'Tuesday', available: true, from: '14:00', to: '17:30', step: 900, startDate: '9/12/2018'},
-    {id: 3, day: 'Wednesday', available: true, from: '14:00', to: '17:30', step: 900, startDate: '9/12/2018'},
-    {id: 4, day: 'Thursday', available: true, from: '14:00', to: '17:30', step: 900, startDate: '9/12/2018'},
-    {id: 5, day: 'Friday', available: true, from: '14:00', to: '17:30', step: 900, startDate: '9/12/2018'},
+    {id: 1, day: 'Monday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
+    {id: 2, day: 'Tuesday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
+    {id: 3, day: 'Wednesday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
+    {id: 4, day: 'Thursday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
+    {id: 5, day: 'Friday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
     // {id: 6, day: 'Saturday', available: false, from: '14:00', to: '17:30', step: 900},
   ]
 }, action ) {
@@ -33,6 +36,12 @@ export default function reducer ( state ={
     }
     case 'UPDATE_ROW' : {
       return {...state, row: action.payload}
+    }
+    case 'UPDATE_ACTIVESTEP' : {
+      return {...state, activeStep: action.payload}
+    }
+    case 'UPDATE_SKIPPED' : {
+      return {...state, skipped: action.payload}
     }
     case 'UPDATE_TABLEHEIGHT': {
       return {...state, tableHeight: action.payload}

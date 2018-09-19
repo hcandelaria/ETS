@@ -2,6 +2,7 @@ export default function reducer ( state ={
   fetching: true,
   fetched: false,
   user: {},
+  schedule: [],
   _id: '',
   errors: {},
   message: '',
@@ -53,6 +54,12 @@ export default function reducer ( state ={
         fetching: false,
         fetched: true
      }
+    }
+    case 'FETCH_USER_SCHEDULE_FULFILLED' : {
+      return {
+        ...state,
+        schedule: action.payload,
+      }
     }
     case 'LOGIN_USER_FULFILLED' : {
       return {

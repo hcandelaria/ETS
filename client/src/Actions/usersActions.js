@@ -29,6 +29,21 @@ export function fetchUser(formData){
       })
   }
 }
+export function fetchUserByStore(store){
+  console.log(`store: ${store}`);
+
+  return function(dispatch) {
+    axios.get(`/api/store/${store}`)
+      .then((res) => {
+        console.log(res);
+        dispatch({type: 'FETCH_USER_SCHEDULE_FULFILLED', payload: res.data.timesAvailable, response: res.data.message, status: 'success'});
+      })
+      .catch((err) => {
+        console.log('fetchUserById:', err)
+        dispatch({type: 'USER_ERROR', payload: err });
+      })
+  }
+}
 export function fetchUserById(id){
   return function(dispatch) {
     //Start fetch
@@ -41,7 +56,7 @@ export function fetchUserById(id){
 
       })
       //Catch error
-      .catch((err) =>{
+      .catch((err) => {
         console.log('fetchUserById:', err)
         dispatch({type: 'USER_ERROR', payload: err });
       })

@@ -13,6 +13,13 @@ export function updateApplicant (applicant) {
     })
   }
 }
+export function changeApplicant(event, applicant){
+  return function(dispatch) {
+    const field = event.target.name;
+    applicant[field] = event.target.value;
+    dispatch({type: 'UPDATE_USER', payload: applicant});
+  }
+}
 //  Export functions
 export function fetchItems(id){
   return function(dispatch) {

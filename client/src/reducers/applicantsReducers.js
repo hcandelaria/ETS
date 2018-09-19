@@ -6,6 +6,8 @@ export default function reducer( state = {
   deletingApplicant: false,
   fetched: false,
   applicantsArray: [],
+  applicant: {},
+  interviewTime: '',
   selectedApplicantsRows: [],
   errors: {},
 }, action ) {
@@ -24,6 +26,12 @@ export default function reducer( state = {
       return {
         ...state,
         selectedApplicantsRows: action.payload,
+      }
+    }
+    case 'UPDATE_INTERVIEWTIME' : {
+      return {
+        ...state,
+        interviewTime: action.payload,
       }
     }
     case 'SELECT_ROW' : {

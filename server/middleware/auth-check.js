@@ -7,7 +7,6 @@ const config = require('../../config');
  *  The Auth Checker middleware function.
  */
 module.exports = (req, res, next) => {
-
   const path = req.path.split('/');
 
   if (!req.headers.authorization && path[1] != 'store') {
@@ -16,7 +15,7 @@ module.exports = (req, res, next) => {
 
   if(path[1] == 'store'){
     return User.find({store: path[2]}, function(req, res){
-      console.log(res);
+
       return next();
     })
   }
