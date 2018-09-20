@@ -3,10 +3,10 @@ const router = new express.Router();
 const applicantsController = require("../controllers/applicantsController");
 const usersController = require("../controllers/usersController");
 
-router.get('/store/:store', (req, res) => {
+router.get('/interviews/:storeId', (req, res) => {
   usersController.findByStore(req,res);
 });
-router.post('/store/:id/applicant', (req, res) => {
+router.post('/interviews/:storeId', (req, res) => {
   console.log(req.body);
   applicantsController.create(req,res)
 });

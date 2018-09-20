@@ -22,7 +22,7 @@ const styles = {
   },
 }
 
-const ApplicantsTable = ({
+const EmailsTable = ({
   applicants,
   selectedApplicantsRows,
   rows,
@@ -107,7 +107,7 @@ const ApplicantsTable = ({
 );
 
 
-ApplicantsTable.propTypes = {
+EmailsTable.propTypes = {
   applicants: PropTypes.array.isRequired,
   selectedApplicantsRows: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
@@ -118,4 +118,4 @@ ApplicantsTable.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default ApplicantsTable;
+export default EmailsTable;

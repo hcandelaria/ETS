@@ -84,7 +84,7 @@ export default class Navbar extends React.Component {
               </div>
             </div>)
             : (
-              (this.props.location[1] != 'store')
+              (this.props.location[1] != 'interviews')
                 ? (
                   <div className="top-bar-right">
                     <div>

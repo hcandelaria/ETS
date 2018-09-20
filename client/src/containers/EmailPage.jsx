@@ -1,5 +1,5 @@
 import React from 'react';
-import ApplicantsTable from '../components/ApplicantsTable.jsx'
+import EmailsTable from '../components/EmailsTable.jsx'
 import Card from '@material-ui/core/Card';
 import Tabs from '@material-ui/core/Card';
 import Tab from '@material-ui/core/Card';
@@ -264,7 +264,7 @@ class ApplicantPage extends React.Component{
             </Button>
           )
         }
-        <ApplicantsTable
+        <EmailsTable
           applicants={this.props.applicantsArray}
           rows={this.props.rows}
           selectedApplicantsRows={this.props.selectedApplicantsRows}

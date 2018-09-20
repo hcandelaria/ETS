@@ -31,7 +31,8 @@ export default class Navbar extends React.Component{
           <Route exact path="/logout" component={LogoutPage}/>
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/settings" component={SettingsPage}/>
-          <Route exact path="/store/:id" component={InterviewsPage}/>
+          <Route exact path="/interviews" component={InterviewsPage}/>
+          <Route exact path="/interviews/:storeId" component={InterviewsPage}/>
           <Route component={PageNotfound}/>
         </Switch>
     )

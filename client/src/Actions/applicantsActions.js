@@ -50,7 +50,7 @@ export function createInterview( store, interview ){
   return function( dispatch ) {
     dispatch({type: 'UPDATE_INTERVIEW_START'})
 
-    axios.post(`/api/store/${store}/applicant`, interview)
+    axios.post(`/api/interviews/${store}`, interview)
       .then( (res) => {
         dispatch({type: 'CREATING_INTERVIEW_FULFILLED'});
       })

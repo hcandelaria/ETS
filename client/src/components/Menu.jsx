@@ -68,15 +68,21 @@ export default class Menu extends React.Component {
             <List>
               <ListItem button component="a" href="/dashboard">
                 <ListItemIcon>
-                   <Icon>dashboard</Icon>
-                 </ListItemIcon>
-                 <ListItemText primary="Dashboard" />
+                  <Icon>dashboard</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItem>
+              <ListItem button component="a" href="/interviews">
+                <ListItemIcon>
+                  <Icon>assignment_ind</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Applications" />
               </ListItem>
               <ListItem button component="a" href="/settings">
                 <ListItemIcon>
-                   <Icon>settings</Icon>
-                 </ListItemIcon>
-                 <ListItemText primary="Setting" />
+                  <Icon>settings</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Setting" />
               </ListItem>
               <Divider/>
               <ListItem button>
