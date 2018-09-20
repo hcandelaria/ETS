@@ -59,7 +59,30 @@ export default function reducer( state = {
         interviewTime: action.payload,
       }
     }
-
+    case 'SELECT_ROWS' : {
+      return {
+        ...state,
+        selectedApplicantsRows: action.payload,
+      }
+    }
+    case 'SELECT_ROW' : {
+      return {
+        ...state,
+        selectedApplicantsRows: [...state.selectedApplicantsRows, action.payload],
+      }
+    }
+    case 'REMOVE_ROW' : {
+      return {
+        ...state,
+        selectedApplicantsRows: action.payload,
+      }
+    }
+    case 'CLEAR_SELECT_ROWS' : {
+      return {
+        ...state,
+        selectedApplicantsRows: [],
+      }
+    }
     default: {
       return state;
     }
