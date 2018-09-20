@@ -10,7 +10,7 @@ module.exports = {
   },
   findByStore: function(req, res) {
     db.User
-      .findOne({store: req.params.store})
+      .findOne({store: req.params.storeId})
       .then(dbModel => res.json(dbModel.timesAvailable))
       .catch(err => res.status(422).json(err));
   },

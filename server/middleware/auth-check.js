@@ -9,11 +9,11 @@ const config = require('../../config');
 module.exports = (req, res, next) => {
   const path = req.path.split('/');
 
-  if (!req.headers.authorization && path[1] != 'store') {
+  if (!req.headers.authorization && path[1] != 'interviews') {
     return res.status(401).end();
   }
 
-  if(path[1] == 'store'){
+  if(path[1] == 'interviews'){
     return User.find({store: path[2]}, function(req, res){
 
       return next();

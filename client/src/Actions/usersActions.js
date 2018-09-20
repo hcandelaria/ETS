@@ -29,11 +29,10 @@ export function fetchUser(formData){
       })
   }
 }
-export function fetchUserByStore(store){
-  console.log(`store: ${store}`);
+export function fetchUserByStore(storeId){
 
   return function(dispatch) {
-    axios.get(`/api/store/${store}`)
+    axios.get(`/api/interviews/${storeId}`)
       .then((res) => {
         console.log(res);
         dispatch({type: 'FETCH_USER_SCHEDULE_FULFILLED', payload: res.data, response: res.data.message, status: 'success'});
