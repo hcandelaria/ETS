@@ -76,17 +76,16 @@ class InterviewsPage extends React.Component{
 
       this.props.dispatch(createInterview(STORE, FORMDATA));
 
-    }else{
-      const activeStep = this.props.activeStep;
-      let skipped = this.props.skipped;
-      if (this.isStepSkipped(activeStep)) {
-        skipped = new Set(skipped.values());
-        skipped.delete(activeStep);
-      }
-
-      this.props.dispatch({type: 'UPDATE_ACTIVESTEP', payload: activeStep + 1});
-      this.props.dispatch({type: 'UPDATE_SKIPPED', payload: skipped });
     }
+    const activeStep = this.props.activeStep;
+    let skipped = this.props.skipped;
+    if (this.isStepSkipped(activeStep)) {
+      skipped = new Set(skipped.values());
+      skipped.delete(activeStep);
+    }
+
+    this.props.dispatch({type: 'UPDATE_ACTIVESTEP', payload: activeStep + 1});
+    this.props.dispatch({type: 'UPDATE_SKIPPED', payload: skipped });
   };
   isStepOptional = step => {
     return step === 1;
@@ -267,9 +266,9 @@ class InterviewsPage extends React.Component{
               <Typography>
                 All steps completed - you&quot;re finished
               </Typography>
-              <Button onClick={this.handleReset}>
+              {/* <Button onClick={this.handleReset}>
                 Reset
-              </Button>
+              </Button> */}
             </div>
           ) : (
             <div>
