@@ -19,18 +19,18 @@ export function changeApplicant(event, applicant){
   }
 }
 //  Export functions
-export function fetchApplicantsByInterviewerId(id){
-  console.log(`id ${id}`);
+export function fetchApplicantsByInterviewerId(interviewerId){
   return function(dispatch) {
     dispatch({type: 'FETCH_APPLICANTS_START'})
 
     let authReq = {
       method: 'GET',
-      url: `/api/applicants/${store}`,
+      url: `/api/interviews/`,
       headers: {
           'Authorization': `bearer ${Auth.getToken()}`,
           'Content-Type': 'application/x-www-form-urlencoded'
       },
+      data: interviewerId,
       json: true
     };
 

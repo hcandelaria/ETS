@@ -3,14 +3,14 @@ const router = new express.Router();
 const applicantsController = require("../controllers/applicantsController");
 const usersController = require("../controllers/usersController");
 
-router.get('/interviews/:storeId', (req, res) => {
-  usersController.findByStore(req,res);
+router.get('/interviews/', (req, res) => {
+  applicantsController.findByInterviewerId(req,res);
 });
 router.post('/interviews/:storeId', (req, res) => {
   applicantsController.create(req,res)
 });
-router.get('/applicants/:storeId', (req,res) => {
-  applicantsController.findByStore(req,res);
+router.get('/interviews/:interviewerId', (req,res) => {
+  applicantsController.findByInterviewerId(req,res);
 });
 
 router.post('/item/:id', (req,res) => {
