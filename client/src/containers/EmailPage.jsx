@@ -13,7 +13,7 @@ import { Base64 } from 'js-base64';
 import google from  '../modules/google.js'
 //  Import Actions
 
-const styles = {
+const STYLES = {
   button:{
     margin: '0px 10px',
   },
@@ -22,7 +22,10 @@ const styles = {
   },
   title:{
     color: '#FFFFFF'
-  }
+  },
+  marginTop: {
+    marginTop: '20px',
+  },
 }
 // Google credentials
 const credentials = {
@@ -224,8 +227,8 @@ class ApplicantPage extends React.Component{
    */
   render() {
     return (
-      <Card className="container">
-        <h2 className="card-heading" style={styles.title}>Applicants</h2>
+      <Card className="container" style={STYLES.marginTop}>
+        <h2 className="card-heading" style={STYLES.title}>Applicants</h2>
 
         {
           this.props.gmailSignedin ?
@@ -233,14 +236,14 @@ class ApplicantPage extends React.Component{
             <div>
               <Button
                 variant="contained"
-                style={styles.button}
+                style={STYLES.button}
                 onClick={this.handleGetEmails}
                 color="primary" >
                 <Icon>cloud_download</Icon>
               </Button>
               <Button
                 variant="contained"
-                style={styles.button}
+                style={STYLES.button}
                 id="send_email"
                 onClick={this.handleCreateEmail}
                 color="primary"
@@ -250,7 +253,7 @@ class ApplicantPage extends React.Component{
               </Button>
               <Button
                 variant="contained"
-                style={styles.button}
+                style={STYLES.button}
                 id="signout_button"
                 onClick={this.handleAuthClick}
                 color="primary" >
@@ -259,7 +262,7 @@ class ApplicantPage extends React.Component{
             </div>
           ):(
 
-            <Button variant="contained" style={styles.button} id="authorize_button" onClick={this.handleAuthClick} color="primary" >
+            <Button variant="contained" style={STYLES.button} id="authorize_button" onClick={this.handleAuthClick} color="primary" >
               <Icon>account_circle</Icon>
             </Button>
           )

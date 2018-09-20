@@ -7,11 +7,10 @@ router.get('/interviews/:storeId', (req, res) => {
   usersController.findByStore(req,res);
 });
 router.post('/interviews/:storeId', (req, res) => {
-  console.log(req.body);
   applicantsController.create(req,res)
 });
-router.get('/item/user/:id', (req,res) => {
-  applicantsController.findByUser(req,res);
+router.get('/applicants/:storeId', (req,res) => {
+  applicantsController.findByStore(req,res);
 });
 
 router.post('/item/:id', (req,res) => {

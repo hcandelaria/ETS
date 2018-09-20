@@ -1,11 +1,9 @@
 //  Import libraries
 import axios from 'axios';
 import Auth from '../modules/Auth';
-import { calculateTable, } from '../actions/settingsActions';
 import { push } from 'react-router-redux';
 
-
-export function updateApplicant (applicant) {
+export function updateApplicant(applicant) {
   return function(dispatch) {
     dispatch({
       type: 'CREATING_APPLICANT',
@@ -21,13 +19,14 @@ export function changeApplicant(event, applicant){
   }
 }
 //  Export functions
-export function fetchItems(id){
+export function fetchApplicantsByInterviewerId(id){
+  console.log(`id ${id}`);
   return function(dispatch) {
-    dispatch({type: 'FETCH_ITEMS_START'})
+    dispatch({type: 'FETCH_APPLICANTS_START'})
 
     let authReq = {
       method: 'GET',
-      url: `/api/item/user/${id}`,
+      url: `/api/applicants/${store}`,
       headers: {
           'Authorization': `bearer ${Auth.getToken()}`,
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -37,12 +36,10 @@ export function fetchItems(id){
 
     axios(authReq)
       .then((res) => {
-        dispatch({type: 'FETCH_ITEMS_FULFILLED', payload: res.data})
-        dispatch(chartItemsAvailable(res.data));
-        dispatch(calculateTable(res.data.length))
+        dispatch({type: 'FETCH_APPLICANTS_FULFILLED', payload: res.data})
       })
       .catch((err) =>{
-        dispatch({type: 'FETCH_ITEMS_ERROR', payload: err })
+        dispatch({type: 'FETCH_APPLICANTS_ERROR', payload: err })
       })
   }
 }

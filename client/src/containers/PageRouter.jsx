@@ -5,9 +5,11 @@ import SignUpPage from './SignUpPage.jsx';
 import LogoutPage from './LogoutPage.jsx';
 import AboutPage from './AboutPage.jsx';
 import SettingsPage from './SettingsPage.jsx';
+import EmailPage from './EmailPage.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import PageNotfound from './PageNotfound.jsx';
 import InterviewsPage from './InterviewsPage.jsx';
+import ApplicantPage from './ApplicantPage.jsx';
 import { connect } from 'react-redux';
 
 @connect((store)=>{
@@ -27,12 +29,12 @@ export default class Navbar extends React.Component{
         <Switch>
           <Route exact path="/" component={LoginPage} />
           <Route exact path="/signup" component={SignUpPage}/>
-          <Route exact path="/dashboard" component={DashboardPage}/>
+          <Route exact path="/dashboard" component={EmailPage}/>
           <Route exact path="/logout" component={LogoutPage}/>
           <Route exact path="/about" component={AboutPage}/>
           <Route exact path="/settings" component={SettingsPage}/>
-          <Route exact path="/interviews" component={InterviewsPage}/>
-          <Route exact path="/interviews/:storeId" component={InterviewsPage}/>
+          <Route exact path="/interviews" component={ApplicantPage}/>
+          <Route exact path="/interviews/:storeId/:interviewId" component={InterviewsPage}/>
           <Route component={PageNotfound}/>
         </Switch>
     )

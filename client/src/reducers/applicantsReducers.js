@@ -41,6 +41,27 @@ export default function reducer( state = {
         interviewCreated: true,
       }
     }
+    case 'FETCH_APPLICANTS_START' : {
+      return {
+        ...state,
+        fetching: true,
+      }
+    }
+    case 'FETCH_APPLICANTS_FULFILLED' : {
+      return {
+        ...state,
+        fetching: false,
+        applicantsArray: action.payload
+      }
+    }
+    case 'FETCH_APPLICANTS_ERROR' : {
+      return {
+        ...state,
+        fetching: false,
+        applicantsArray: [],
+        errors: action.payload,
+      }
+    }
     case 'FETCH_USER_SCHEDULE_FULFILLED' : {
       return {
         ...state,

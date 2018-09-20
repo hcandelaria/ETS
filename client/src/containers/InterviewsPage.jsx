@@ -72,9 +72,11 @@ class InterviewsPage extends React.Component{
       const EMAIL = this.props.applicant.email;
       const PHONE = this.props.applicant.phone;
       const INTERVIEWTIME = this.props.interviewTime;
-      const FORMDATA = `store=${STORE}&fName=${FNAME}&lName=${LNAME}&email=${EMAIL}&phone=${PHONE}&interviewTime=${INTERVIEWTIME}`;
+      const INTERVIEWERID = this.props.location[3];
+      let formData = `store=${STORE}&fName=${FNAME}&lName=${LNAME}&email=${EMAIL}`;
+          formData += `&phone=${PHONE}&interviewTime=${INTERVIEWTIME}&interviewerId=${INTERVIEWERID}`;
 
-      this.props.dispatch(createInterview(STORE, FORMDATA));
+      this.props.dispatch(createInterview(STORE, formData));
 
     }
     const activeStep = this.props.activeStep;

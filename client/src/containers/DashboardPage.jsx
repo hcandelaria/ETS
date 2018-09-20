@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import EmailPage from './EmailPage.jsx';
 
-const styles = {
+const STYLES = {
   marginTop: {
     marginTop: '20px',
   },
@@ -43,7 +43,7 @@ export default class DashboardPage extends React.Component {
    */
   render() {
     return (
-      <Paper className='container' style={styles.marginTop}>
+      <Paper className='container' style={STYLES.marginTop}>
         <EmailPage />
       </Paper>
     )

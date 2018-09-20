@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 //Creating schema
 const applicantSchema = new Schema({
   //_id:
@@ -13,7 +12,8 @@ const applicantSchema = new Schema({
   store:         { type: String, required: true                     },
   position:      { type: String, required: false                    },
   step:          { type: Number, required: false                    },
-  interviewTime: { type: String, required: false                   }
+  interviewTime: { type: String, required: false                    },
+  interviewerId: { type: Schema.Types.ObjectId, required: true      },
 });
 //Exporting
 module.exports = mongoose.model('Applicant', applicantSchema);

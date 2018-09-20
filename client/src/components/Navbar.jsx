@@ -9,8 +9,7 @@ import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux'
 
-
-const styles = {
+const STYLES = {
   link: {
     margin: '10px',
     color: '#000000',
@@ -52,6 +51,7 @@ export default class Navbar extends React.Component {
       ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
       : console.log('Welcome Guess!');
   }
+  
   toggleMenu() {
     this.props.dispatch({
       type: 'UPDATE_MENU'
@@ -67,18 +67,18 @@ export default class Navbar extends React.Component {
     return (<AppBar position="sticky">
       <Toolbar>
 
-        <Typography variant="display2" color="inherit" style={styles.flex}>
-          <Link to='/' style={styles.link}>EXPRESS</Link>
+        <Typography variant="display2" color="inherit" style={STYLES.flex}>
+          <Link to='/' style={STYLES.link}>EXPRESS</Link>
         </Typography>
         {
           this.props.auth
             ? (<div>
               <div className="top-bar-right">
 
-                <Button variant="contained" style={styles.button} color="secondary" onClick={this.signOut}>
+                <Button variant="contained" style={STYLES.button} color="secondary" onClick={this.signOut}>
                   SIGN OUT
                 </Button>
-                <Button variant="contained" style={styles.button} color="secondary" onClick={this.toggleMenu}>
+                <Button variant="contained" style={STYLES.button} color="secondary" onClick={this.toggleMenu}>
                   <Icon>menu</Icon>
                 </Button>
               </div>
@@ -89,10 +89,10 @@ export default class Navbar extends React.Component {
                   <div className="top-bar-right">
                     <div>
                       <div className="top-bar-right">
-                        <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/">
+                        <Button variant="contained" style={STYLES.button} color="secondary" component={Link} to="/">
                           LOGIN
                         </Button>
-                        <Button variant="contained" style={styles.button} color="secondary" component={Link} to="/signup">
+                        <Button variant="contained" style={STYLES.button} color="secondary" component={Link} to="/signup">
                           SIGN UP
                         </Button>
                       </div>
