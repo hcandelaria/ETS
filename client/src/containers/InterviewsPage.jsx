@@ -66,7 +66,7 @@ class InterviewsPage extends React.Component{
   handleNext = () => {
     if(this.props.activeStep === this.props.steps.length - 1){
 
-      const STORE = this.props.location[2];
+      const STOREID = this.props.location[2];
       const FNAME = this.props.applicant.fName;
       const LNAME = this.props.applicant.lName;
       const EMAIL = this.props.applicant.email;

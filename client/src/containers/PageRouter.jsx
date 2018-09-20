@@ -6,10 +6,10 @@ import LogoutPage from './LogoutPage.jsx';
 import AboutPage from './AboutPage.jsx';
 import SettingsPage from './SettingsPage.jsx';
 import EmailPage from './EmailPage.jsx';
+import ApplicantPage from './ApplicantPage.jsx';
 import DashboardPage from './DashboardPage.jsx';
 import PageNotfound from './PageNotfound.jsx';
 import InterviewsPage from './InterviewsPage.jsx';
-import ApplicantPage from './ApplicantPage.jsx';
 import { connect } from 'react-redux';
 
 @connect((store)=>{
