@@ -1,5 +1,5 @@
 import Auth from '../modules/Auth';
-
+import moment from 'moment';
 
 export default function reducer ( state ={
   authenticated: false,
@@ -16,6 +16,7 @@ export default function reducer ( state ={
     { id: 'position', numeric: false, disablePadding: false, label: 'Position' },
     { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
   ],
+  date: moment().unix(),
   timesAvailable: [
     // {id: 0, day: 'Sunday', available: false, from: '14:00', to: '17:30', step: 900},
     {id: 1, day: 'Monday', available: true, from: '14:00', to: '17:30', step: 1800, startDate: '9/12/2018'},
@@ -34,7 +35,9 @@ export default function reducer ( state ={
     case 'UPDATE_ROW' : {
       return {...state, row: action.payload}
     }
-
+    case 'UPDATE_DATE' : {
+      return {...state, date: action.payload}
+    }
     case 'UPDATE_TABLEHEIGHT': {
       return {...state, tableHeight: action.payload}
     }

@@ -13,14 +13,22 @@ export default function reducer( state = {
   applicantsArray: [],
   schedule: [],
   applicant: {},
+  dateSelectedInterviews: [],
   interviewTime: '',
   selectedApplicantsRows: [],
+  selectedInterviewsRows: [],
   errors: {},
 }, action ) {
 
   // Switch statement
   switch(action.type){
 
+    case 'UPDATE_DATE_SELECTED_INTERVIEWS' : {
+      return {
+        ...state,
+        dateSelectedInterviews: action.payload,
+      }
+    }
     case 'CREATING_APPLICANT' : {
       return {
         ...state,
@@ -80,28 +88,52 @@ export default function reducer( state = {
         interviewTime: action.payload,
       }
     }
-    case 'SELECT_ROWS' : {
+    case 'SELECT_APPLICANTS_ROWS' : {
       return {
         ...state,
         selectedApplicantsRows: action.payload,
       }
     }
-    case 'SELECT_ROW' : {
+    case 'SELECT_APPLICANT_ROW' : {
       return {
         ...state,
         selectedApplicantsRows: [...state.selectedApplicantsRows, action.payload],
       }
     }
-    case 'REMOVE_ROW' : {
+    case 'REMOVE_APPLICANT_ROW' : {
       return {
         ...state,
         selectedApplicantsRows: action.payload,
       }
     }
-    case 'CLEAR_SELECT_ROWS' : {
+    case 'CLEAR_SELECT_APPLICANTS_ROWS' : {
       return {
         ...state,
         selectedApplicantsRows: [],
+      }
+    }
+    case 'SELECT_INTERVIEWS_ROWS' : {
+      return {
+        ...state,
+        selectedInterviewsRows: action.payload,
+      }
+    }
+    case 'SELECT_INTERVIEW_ROW' : {
+      return {
+        ...state,
+        selectedInterviewsRows: [...state.selectedApplicantsRows, action.payload],
+      }
+    }
+    case 'REMOVE_INTERVIEW_ROW' : {
+      return {
+        ...state,
+        selectedInterviewsRows: action.payload,
+      }
+    }
+    case 'CLEAR_SELECT_INTERVIEWS_ROWS' : {
+      return {
+        ...state,
+        selectedInterviewsRows: [],
       }
     }
     default: {

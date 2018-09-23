@@ -3,7 +3,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import Navbar from './components/Navbar.jsx';
 import Menu from './components/Menu.jsx';
-import PageRouter from './containers/PageRouter.jsx';
+import PageRouter from './PageRouter.jsx';
 
 
 const theme = createMuiTheme({

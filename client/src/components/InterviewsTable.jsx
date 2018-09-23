@@ -26,9 +26,9 @@ const styles = {
   },
 }
 
-const EmailsTable = ({
-  applicants,
-  selectedApplicantsRows,
+const InterviewsTable = ({
+  Interviews,
+  selectedInterviewsRows,
   rows,
   onSelectAllClick,
   rowSelectClick,
@@ -75,21 +75,21 @@ const EmailsTable = ({
     </TableHead>
 
     <TableBody>
-      {applicants
+      {Interviews
         // .sort(getSorting(order, orderBy))
         // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map(applicant => {
+        .map(interview => {
 
-          let rowId = isSelected(applicant._id);
+          let rowId = isSelected(interview._id);
 
           return (
             <TableRow
               hover
-              onClick={event => rowSelectClick(event, applicant._id)}
+              onClick={event => rowSelectClick(event, interview._id)}
               role="checkbox"
               aria-checked={rowId}
               tabIndex={-1}
-              key={applicant._id}
+              key={interview._id}
               selected={rowId}
             >
               <TableCell padding="checkbox">
@@ -99,10 +99,10 @@ const EmailsTable = ({
                 />
               </TableCell>
               <TableCell component="th" scope="row" padding="none">
-                {`${applicant.firstName} ${applicant.lastName}`}
+                {`${interview.fName} ${interview.lName}`}
               </TableCell>
-              <TableCell>{applicant.position}</TableCell>
-              <TableCell>{applicant.email}</TableCell>
+              <TableCell>{interview.position}</TableCell>
+              <TableCell>{interview.email}</TableCell>
             </TableRow>
           );
         })}
@@ -111,9 +111,9 @@ const EmailsTable = ({
 );
 
 
-EmailsTable.propTypes = {
-  applicants: PropTypes.array.isRequired,
-  selectedApplicantsRows: PropTypes.array.isRequired,
+InterviewsTable.propTypes = {
+  Interviews: PropTypes.array.isRequired,
+  selectedInterviewsRows: PropTypes.array.isRequired,
   rows: PropTypes.array.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   rowSelectClick: PropTypes.func.isRequired,
@@ -122,4 +122,4 @@ EmailsTable.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default EmailsTable;
+export default InterviewsTable;

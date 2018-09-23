@@ -107,11 +107,11 @@ class ApplicantPage extends React.Component{
 
     if (this.props.selectedApplicantsRows.length > 0) {
       store.dispatch({
-        type: "CLEAR_SELECT_ROWS",
+        type: "CLEAR_SELECT_APPLICANTS_ROWS",
       })
     }else{
       store.dispatch({
-        type: "SELECT_ROWS",
+        type: "SELECT_APPLICANTS_ROWS",
         payload: selected,
       })
     }
@@ -121,7 +121,7 @@ class ApplicantPage extends React.Component{
     let selectedIndex = this.props.selectedApplicantsRows.indexOf(id)
     if(selectedIndex === -1){
       store.dispatch({
-        type: "SELECT_ROW",
+        type: "SELECT_APPLICANT_ROW",
         payload: id,
       })
     }else{
@@ -132,7 +132,7 @@ class ApplicantPage extends React.Component{
       );
 
       store.dispatch({
-        type: "REMOVE_ROW",
+        type: "REMOVE_APPLICANT_ROW",
         payload: newApplicantsRows,
       })
     }

@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import Auth from '../modules/Auth';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
-import Icon from '@material-ui/core/Icon';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux'
+import {
+  Typography,
+  Toolbar,
+  Icon,
+  AppBar,
+  Button,
+} from '@material-ui/core/';
 
 const STYLES = {
   link: {
@@ -51,7 +53,7 @@ export default class Navbar extends React.Component {
       ? this.props.dispatch({type: 'UPDATE_AUTHENTICATED'})
       : console.log('Welcome Guess!');
   }
-  
+
   toggleMenu() {
     this.props.dispatch({
       type: 'UPDATE_MENU'

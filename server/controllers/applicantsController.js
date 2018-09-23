@@ -12,6 +12,7 @@ module.exports = {
   findByInterviewerId: function(req,res){
     db.Applicant
       .find(req.query)
+      // .sort({date: 'desc'})
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },

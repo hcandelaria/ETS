@@ -2,6 +2,7 @@
 import axios from 'axios';
 import Auth from '../modules/Auth';
 import { push } from 'react-router-redux';
+import moment from 'moment';
 
 export function updateApplicant(applicant) {
   return function(dispatch) {
@@ -19,7 +20,7 @@ export function changeApplicant(event, applicant){
   }
 }
 //  Export functions
-export function fetchApplicantsByInterviewerId(interviewerId){
+export function fetchApplicantsByInterviewerId(interviewerId,day){
   return function(dispatch) {
     dispatch({type: 'FETCH_APPLICANTS_START'})
 
@@ -33,10 +34,18 @@ export function fetchApplicantsByInterviewerId(interviewerId){
       data: interviewerId,
       json: true
     };
-
     axios(authReq)
       .then((res) => {
+        let selectedInterviews = res.data.filter( applicant => {
+
+          let t = moment.unix(applicant.interviewTime).format('YYYY-MM-DD');
+          let d = moment().format('YYYY-MM-DD');
+
+          return moment(t).isSame(d, 'day');
+        });
+
         dispatch({type: 'FETCH_APPLICANTS_FULFILLED', payload: res.data})
+        dispatch({type: 'UPDATE_DATESELECTEDINTERVIEWS', payload: selectedInterviews});
       })
       .catch((err) =>{
         dispatch({type: 'FETCH_APPLICANTS_ERROR', payload: err })

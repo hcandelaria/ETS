@@ -74,9 +74,9 @@ export default class Menu extends React.Component {
               </ListItem>
               <ListItem button component="a" href="/interviews">
                 <ListItemIcon>
-                  <Icon>assignment_ind</Icon>
+                  <Icon>insert_invitation</Icon>
                 </ListItemIcon>
-                <ListItemText primary="Applications" />
+                <ListItemText primary="Interviews" />
               </ListItem>
               <ListItem button component="a" href="/settings">
                 <ListItemIcon>

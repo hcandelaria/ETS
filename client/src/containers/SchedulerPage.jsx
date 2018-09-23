@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Interviews from '../components/Interviews.jsx';
+import Scheduler from '../components/Scheduler.jsx';
 import { fetchUserByStore } from '../actions/usersActions';
 import { changeApplicant, createInterview } from '../actions/applicantsActions';
+import Moment from 'react-moment';
+import moment from 'moment';
 import {
   Card,
   Stepper,
@@ -12,7 +14,7 @@ import {
   Button,
   TextField,
 } from '@material-ui/core/';
-import Moment from 'react-moment';
+
 
 const STYLES = {
   marginTop: {
@@ -38,7 +40,7 @@ const STYLES = {
     interviewTime: store.applicants.interviewTime,
   }
 })
-class InterviewsPage extends React.Component{
+class SchedulerPage extends React.Component{
   /**
    * Class constructor.
    */
@@ -66,7 +68,7 @@ class InterviewsPage extends React.Component{
   handleNext = () => {
     if(this.props.activeStep === this.props.steps.length - 1){
 
-      const STOREID = this.props.location[2];
+      const STORE = this.props.location[2];
       const FNAME = this.props.applicant.fName;
       const LNAME = this.props.applicant.lName;
       const EMAIL = this.props.applicant.email;
@@ -154,8 +156,11 @@ class InterviewsPage extends React.Component{
   processInterview(event){
     event.preventDefault();
     let time = event.target.name ? event.target.children[0].children[0].dateTime : event.target.dateTime;
-    this.props.dispatch({type: 'UPDATE_INTERVIEWTIME', payload: time})
-    this.handleNext();
+    console.log(time);
+    time = moment.unix(time);
+    console.log(time);
+    // this.props.dispatch({type: 'UPDATE_INTERVIEWTIME', payload: time})
+    // this.handleNext();
   };
   getStepContent(step) {
     switch (step) {
@@ -199,7 +204,7 @@ class InterviewsPage extends React.Component{
             this.props.schedule.map( d => {
               return (
                 <div key={d.day}>
-                  <Interviews
+                  <Scheduler
                     day={d.day}
                     times={this.calculateTimes(d.from,d.to,d.step)}
                     onClick={this.processInterview}
@@ -221,7 +226,7 @@ class InterviewsPage extends React.Component{
               Contact information: {`${this.props.applicant.email} ${this.props.applicant.phone}`}
             </Typography>
             <Typography>
-              <Moment parse="x" format="hh:mm a dddd, MMMM Do YYYY">
+              <Moment parse="x" format="LLLL">
                 {this.props.interviewTime}
               </Moment>
             </Typography>
@@ -305,4 +310,4 @@ class InterviewsPage extends React.Component{
   }
 }
 
-export default InterviewsPage;
+export default SchedulerPage;

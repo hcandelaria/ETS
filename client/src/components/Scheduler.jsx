@@ -19,7 +19,7 @@ const STYLES = {
   },
 }
 
-const Interviews = ({
+const Scheduler = ({
   day,
   times,
   getSteps,
@@ -44,7 +44,7 @@ const Interviews = ({
     }
   </div>
 );
-Interviews.propTypes = {
+Scheduler.propTypes = {
   day: PropTypes.string.isRequired,
   times: PropTypes.array.isRequired,
   getSteps: PropTypes.array.isRequired,
@@ -53,4 +53,4 @@ Interviews.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default Interviews;
+export default Scheduler;
